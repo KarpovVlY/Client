@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>NewStorage</class>
+ <widget class="QWidget" name="NewStorage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>420</width>
+    <height>580</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="categoryWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>420</width>
+     <height>45</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(40, 46, 51);</string>
+   </property>
+   <widget class="QLabel" name="newContactLabel">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>5</y>
+      <width>141</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Новая запись</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cancelButon">
+    <property name="geometry">
+     <rect>
+      <x>7</x>
+      <y>7</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 0, 127);
+ border-style: solid;
+ border-radius:15px;
+ max-width:30px;
+ max-height:30px;
+ min-width:30px;
+ min-height:30px;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../../../../../Рабочий стол/ClientRes/arrow_white.png</normaloff>../../../../../Рабочий стол/ClientRes/arrow_white.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>25</width>
+      <height>25</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="confirmButton">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>7</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 0, 127);
+ border-style: solid;
+ border-radius:15px;
+ max-width:30px;
+ max-height:30px;
+ min-width:30px;
+ min-height:30px;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../../../../../Рабочий стол/ClientRes/done_white.png</normaloff>../../../../../Рабочий стол/ClientRes/done_white.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>25</width>
+      <height>25</height>
+     </size>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="newStorageWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>45</y>
+     <width>420</width>
+     <height>535</height>
+    </rect>
+   </property>
+   <widget class="QPlainTextEdit" name="contentTextEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>400</y>
+      <width>400</width>
+      <height>120</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPlainTextEdit{
+	background-color: rgb(35, 38, 41); 
+	selection-background-color: rgb(43,45,56);  
+	border-style: solid;
+	color:  #FFF; 
+	border-radius: 10px; 
+	padding-left: 20px;
+	padding-right: 20px; 
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+QPlainTextEdit:hover{
+	border: 2px solid rgb(27, 28, 35);
+} 
+                            
+QPlainTextEdit:focus{
+	border: 2px solid rgb(27, 28, 35); 
+	background-color: rgb(30, 33, 36); 
+}
+
+QScrollBar:vertical
+ {
+     background-color: #2A2929;
+     width: 12px;
+     margin: 15px 3px 15px 3px;
+     border: 1px transparent #2A2929;
+     border-radius: 3px;
+ }
+
+ QScrollBar::handle:vertical
+ {
+     background-color:  rgb(255, 0, 127);
+     min-height: 5px;
+     border-radius: 3px;
+ }
+
+ QScrollBar::sub-line:vertical
+ {
+     margin: 3px 0px 3px 0px;
+     border-image: url(:/images/up_arrow_disabled.png);        /* # &lt;-------- */
+     height: 10px;
+     width: 10px;
+     subcontrol-position: top;
+     subcontrol-origin: margin;
+ }
+
+ QScrollBar::add-line:vertical
+ {
+     margin: 3px 0px 3px 0px;
+     border-image: url(:/images/down_arrow_disabled.png);       /* # &lt;-------- */
+     height: 10px;
+     width: 10px;
+     subcontrol-position: bottom;
+     subcontrol-origin: margin;
+ }
+
+ QScrollBar::sub-line:vertical:hover,QScrollBar::sub-line:vertical:on
+ {
+
+     border-image: url(:/images/up_arrow.png);                  /* # &lt;-------- */
+     height: 10px;
+     width: 10px;
+     subcontrol-position: top;
+     subcontrol-origin: margin;
+ }
+
+
+ QScrollBar::add-line:vertical:hover, QScrollBar::add-line:vertical:on
+ {
+     border-image: url(:/images/down_arrow.png);                /* # &lt;-------- */
+     height: 10px;
+     width: 10px;
+     subcontrol-position: bottom;
+     subcontrol-origin: margin;
+ }
+
+ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical
+ {
+     background: none;
+ }
+
+
+ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
+ {
+     background: none;
+ }</string>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAsNeeded</enum>
+    </property>
+    <property name="plainText">
+     <string>Комментарий</string>
+    </property>
+    <property name="tabStopWidth">
+     <number>20</number>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="nameLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>244</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit {
+	border: 2px solid rgb(37, 39, 48); 
+	color:  #FFF; 
+	border-radius: 15px; 
+	padding-left: 20px;
+	padding-right: 20px; 
+	background-color: rgb(35, 38, 41); 
+	selection-background-color: rgb(43,45,56);  
+	max-width:200px; 
+	max-height:30px;
+	min-width:200px; 
+	min-height:30px;
+}
+ 
+QLineEdit:hover{
+	border: 2px solid rgb(27, 28, 35);
+} 
+                            
+QLineEdit:focus{
+	border: 2px solid rgb(27, 28, 35); 
+	background-color: rgb(30, 33, 36); 
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Название</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="commentLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>70</y>
+      <width>244</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit {
+	border: 2px solid rgb(37, 39, 48); 
+	color:  #FFF; 
+	border-radius: 15px; 
+	padding-left: 20px;
+	padding-right: 20px; 
+	background-color: rgb(35, 38, 41); 
+	selection-background-color: rgb(43,45,56);  
+	max-width:200px; 
+	max-height:30px;
+	min-width:200px; 
+	min-height:30px;
+}
+ 
+QLineEdit:hover{
+	border: 2px solid rgb(27, 28, 35);
+} 
+                            
+QLineEdit:focus{
+	border: 2px solid rgb(27, 28, 35); 
+	background-color: rgb(30, 33, 36); 
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Комментарий</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="passwordLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>190</y>
+      <width>244</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit {
+	border: 2px solid rgb(37, 39, 48); 
+	color:  #FFF; 
+	border-radius: 15px; 
+	padding-left: 20px;
+	padding-right: 20px; 
+	background-color: rgb(35, 38, 41); 
+	selection-background-color: rgb(43,45,56);  
+	max-width:200px; 
+	max-height:30px;
+	min-width:200px; 
+	min-height:30px;
+}
+ 
+QLineEdit:hover{
+	border: 2px solid rgb(27, 28, 35);
+} 
+                            
+QLineEdit:focus{
+	border: 2px solid rgb(27, 28, 35); 
+	background-color: rgb(30, 33, 36); 
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Пароль</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="loginLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>140</y>
+      <width>244</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit {
+	border: 2px solid rgb(37, 39, 48); 
+	color:  #FFF; 
+	border-radius: 15px; 
+	padding-left: 20px;
+	padding-right: 20px; 
+	background-color: rgb(35, 38, 41); 
+	selection-background-color: rgb(43,45,56);  
+	max-width:200px; 
+	max-height:30px;
+	min-width:200px; 
+	min-height:30px;
+}
+ 
+QLineEdit:hover{
+	border: 2px solid rgb(27, 28, 35);
+} 
+                            
+QLineEdit:focus{
+	border: 2px solid rgb(27, 28, 35); 
+	background-color: rgb(30, 33, 36); 
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Логин</string>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="infoTextEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>260</y>
+      <width>400</width>
+      <height>120</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPlainTextEdit{
+	background-color: rgb(35, 38, 41); 
+	selection-background-color: rgb(43,45,56);  
+	border-style: solid;
+	color:  #FFF; 
+	border-radius: 10px; 
+	padding-left: 20px;
+	padding-right: 20px; 
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+QPlainTextEdit:hover{
+	border: 2px solid rgb(27, 28, 35);
+} 
+                            
+QPlainTextEdit:focus{
+	border: 2px solid rgb(27, 28, 35); 
+	background-color: rgb(30, 33, 36); 
+}
+
+QScrollBar:vertical
+ {
+     background-color: #2A2929;
+     width: 12px;
+     margin: 15px 3px 15px 3px;
+     border: 1px transparent #2A2929;
+     border-radius: 3px;
+ }
+
+ QScrollBar::handle:vertical
+ {
+     background-color:  rgb(255, 0, 127);
+     min-height: 5px;
+     border-radius: 3px;
+ }
+
+ QScrollBar::sub-line:vertical
+ {
+     margin: 3px 0px 3px 0px;
+     border-image: url(:/images/up_arrow_disabled.png);        /* # &lt;-------- */
+     height: 10px;
+     width: 10px;
+     subcontrol-position: top;
+     subcontrol-origin: margin;
+ }
+
+ QScrollBar::add-line:vertical
+ {
+     margin: 3px 0px 3px 0px;
+     border-image: url(:/images/down_arrow_disabled.png);       /* # &lt;-------- */
+     height: 10px;
+     width: 10px;
+     subcontrol-position: bottom;
+     subcontrol-origin: margin;
+ }
+
+ QScrollBar::sub-line:vertical:hover,QScrollBar::sub-line:vertical:on
+ {
+
+     border-image: url(:/images/up_arrow.png);                  /* # &lt;-------- */
+     height: 10px;
+     width: 10px;
+     subcontrol-position: top;
+     subcontrol-origin: margin;
+ }
+
+
+ QScrollBar::add-line:vertical:hover, QScrollBar::add-line:vertical:on
+ {
+     border-image: url(:/images/down_arrow.png);                /* # &lt;-------- */
+     height: 10px;
+     width: 10px;
+     subcontrol-position: bottom;
+     subcontrol-origin: margin;
+ }
+
+ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical
+ {
+     background: none;
+ }
+
+
+ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
+ {
+     background: none;
+ }</string>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAsNeeded</enum>
+    </property>
+    <property name="plainText">
+     <string>Дополнительная информация</string>
+    </property>
+    <property name="tabStopWidth">
+     <number>20</number>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
