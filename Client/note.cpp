@@ -3,6 +3,7 @@
 
 #include "master.h"
 
+
 Note::Note(QWidget *parent,
            QStackedWidget *mainStackedWidget,
            NoteItem *item) :
@@ -14,11 +15,14 @@ Note::Note(QWidget *parent,
     this->mainStackedWidget = mainStackedWidget;
     this->masterWidget = parent;
 
-    ui->nameLabel->setText(item->name);
-    ui->descriptionLabel->setText(item->description);
+
+    this->currentItem = item;
+
+
+
+    ui->nameLineEdit->setText(item->name);
+    ui->descriptionLineEdit->setText(item->description);
     ui->contentPlainTextEdit->setPlainText(item->content);
-
-
 }
 
 
@@ -37,6 +41,77 @@ void Note::on_cancelButon_clicked()
             });
 }
 
+
+void Note::on_editButton_clicked()
+{
+
+    NewNote *newNotePage = new NewNote(this,
+                                       mainStackedWidget,
+                                       currentItem->name,
+                                       currentItem->description,
+                                       currentItem->content);
+
+    mainStackedWidget->addWidget(newNotePage);
+
+    startAnimation();
+
+    connect(animation, &QPropertyAnimation::finished,
+            [=]()
+            {
+                mainStackedWidget->setCurrentWidget(newNotePage);
+
+                newNotePage->endAnimation();
+
+                fadeEffect->setOpacity(1);
+            });
+}
+
+
+
+void Note::on_deleteButon_clicked()
+{
+    QSqlQuery query;
+    query.exec("DELETE FROM notes WHERE id = " + QString::number(currentItem->uniqueId));
+
+
+    startAnimation();
+
+    connect(animation, &QPropertyAnimation::finished,
+            [=]()
+            {
+                this->mainStackedWidget->setCurrentWidget(masterWidget);
+                Master *master = qobject_cast<Master *>(masterWidget);
+                master->endAnimation();
+                master->deleteNoteItem(currentItem->id);
+
+                fadeEffect->setOpacity(1);
+            });
+}
+
+
+void Note::noteChanged(QString name,
+                       QString description,
+                       QString content)
+{
+    currentItem->name = name;
+    currentItem->description = description;
+    currentItem->content = content;
+
+    ui->nameLineEdit->setText(name);
+    ui->descriptionLineEdit->setText(description);
+    ui->contentPlainTextEdit->setPlainText(content);
+
+    QSqlQuery query;
+    query.exec("UPDATE notes SET name = '" + name +
+               "', description = '" + description +
+               "', content = '" + content +
+               "' WHERE id = " + QString::number(currentItem->uniqueId));
+
+
+
+    Master *master = qobject_cast<Master *>(masterWidget);
+    master->updateNoteList();
+}
 
 
 void Note::startAnimation()
@@ -68,4 +143,10 @@ void Note::endAnimation()
 Note::~Note()
 {
     delete ui;
+
+    delete fadeEffect;
+    delete animation;
+
+    delete currentItem;
 }
+

@@ -24,7 +24,7 @@ void MasterHeaderMouseHandler::refresh()
 {
     parent->setStyleSheet(Stylesheet::masterHeaderParentStylesheetOff);
     label->setStyleSheet(Stylesheet::masterHeaderLabelStylesheetOff);
-    line->setStyleSheet("background-color: rgb(127, 127, 127); max-height:1px; min-height:1px; ");
+    line->setStyleSheet(Stylesheet::masterHeaderLineStylesheetOff);
 }
 
 
@@ -56,7 +56,7 @@ bool MasterHeaderMouseHandler::eventFilter(QObject *obj, QEvent *event)
 
 
         parent->setStyleSheet(Stylesheet::masterHeaderParentStylesheetOn);
-        line->setStyleSheet("background-color: rgb(255, 0, 127); max-height:1px; min-height:1px;");
+        line->setStyleSheet(Stylesheet::masterHeaderLineStylesheetOn);
         return true;
     }
     else if(event->type() == QEvent::Enter)

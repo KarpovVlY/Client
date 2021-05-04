@@ -25,46 +25,64 @@ NewContact::NewContact(QWidget *parent,
     this->mainStackedWidget = mainStackedWidget;
     this->masterWidget = parent;
 
+    ui->contentTextEdit->setPlainText("");
+
+    isNewContactFromMaster = true;
 }
 
 
-
-void NewContact::fillList()
+NewContact::NewContact(QWidget *parent,
+                       QStackedWidget *mainStackedWidget,
+                       QString name,
+                       QString description,
+                       QString phone,
+                       QString email,
+                       QString content):
+                       QWidget(parent),
+                       ui(new Ui::NewContact)
 {
-    nameLineEdit = new QLineEdit("Имя");
-    companyLineEdit = new QLineEdit("Компания");
-    numberPushButton = new QPushButton();
+    ui->setupUi(this);
 
 
-    QPixmap pixmap("/home/vladislav/Рабочий стол/ClientRes/add_white.png");
-    QIcon icon(pixmap);
-    numberPushButton->setIcon(icon);
-    numberPushButton->setIconSize(QSize(30, 30));
+    this->mainStackedWidget = mainStackedWidget;
+    this->masterWidget = parent;
 
-    nameLineEdit->setStyleSheet(lineEditStyleheet);
-    companyLineEdit->setStyleSheet(lineEditStyleheet);
-    numberPushButton->setStyleSheet(pushButtonStyleheet);
-
-
-
-    newContactScrollLayout->addWidget(nameLineEdit);
-    newContactScrollLayout->addWidget(companyLineEdit);
+    ui->nameLineEdit->setText(name);
+    ui->commentLineEdit->setText(description);
+    ui->phoneLineEdit->setText(phone);
+    ui->emailLineEdit->setText(email);
+    ui->contentTextEdit->setPlainText(content);
 
 
-    newContactScrollLayout->addWidget(numberPushButton);
+    ui->newContactLabel->setText("Изменить контакт");
+
+    isNewContactFromMaster = false;
 }
+
 
 
 void NewContact::on_cancelButon_clicked()
 {
-    startAnimation();
+   startAnimation();
 
     connect(animation, &QPropertyAnimation::finished,
             [=]()
             {
-                this->mainStackedWidget->setCurrentWidget(masterWidget);
-                Master *master = qobject_cast<Master *>(masterWidget);
-                master->endAnimation();
+
+                if(isNewContactFromMaster)
+                {
+                    this->mainStackedWidget->setCurrentWidget(masterWidget);
+                    Master *master = qobject_cast<Master *>(masterWidget);
+                    master->endAnimation();
+                }
+                else
+                {
+                    this->mainStackedWidget->setCurrentWidget(masterWidget);
+                    Contact *contact = qobject_cast<Contact *>(masterWidget);
+                    contact->endAnimation();
+                }
+
+
                 fadeEffect->setOpacity(1);
             });
 }
@@ -77,15 +95,41 @@ void NewContact::on_confirmButton_clicked()
     connect(animation, &QPropertyAnimation::finished,
             [=]()
             {
-                this->mainStackedWidget->setCurrentWidget(masterWidget);
-                Master *master = qobject_cast<Master *>(masterWidget);
 
-                master->addNewContact(ui->nameLineEdit->text(),
-                                      ui->commentLineEdit->text(),
-                                      ui->phoneLineEdit->text(),
-                                      ui->emailLineEdit->text(),
-                                      ui->contentTextEdit->toPlainText());
-                master->endAnimation();
+                if(isNewContactFromMaster)
+                {
+                    this->mainStackedWidget->setCurrentWidget(masterWidget);
+                    Master *master = qobject_cast<Master *>(masterWidget);
+
+                    master->addNewContact(ui->nameLineEdit->text(),
+                                          ui->commentLineEdit->text(),
+                                          ui->phoneLineEdit->text(),
+                                          ui->emailLineEdit->text(),
+                                          ui->contentTextEdit->toPlainText());
+                    master->endAnimation();
+
+                    ui->nameLineEdit->setText("");
+                    ui->commentLineEdit->setText("");
+                    ui->phoneLineEdit->setText("");
+                    ui->emailLineEdit->setText("");
+                    ui->contentTextEdit->setPlainText("");
+                }
+                else
+                {
+                    this->mainStackedWidget->setCurrentWidget(masterWidget);
+                    Contact *contact = qobject_cast<Contact *>(masterWidget);
+
+                    contact->contactChanged(ui->nameLineEdit->text(),
+                                            ui->commentLineEdit->text(),
+                                            ui->phoneLineEdit->text(),
+                                            ui->emailLineEdit->text(),
+                                            ui->contentTextEdit->toPlainText());
+
+                    contact->endAnimation();
+                }
+
+
+
                 fadeEffect->setOpacity(1);
             });
 }
@@ -122,6 +166,5 @@ void NewContact::endAnimation()
 NewContact::~NewContact()
 {
     delete ui;
-    delete newContactScrollLayout;
 }
 

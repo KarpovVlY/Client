@@ -2,6 +2,8 @@
 #include "ui_new_storage.h"
 
 #include "master.h"
+#include "storage.h"
+
 
 NewStorage::NewStorage(QWidget *parent,
                        QStackedWidget *mainStackedWidget) :
@@ -13,6 +15,39 @@ NewStorage::NewStorage(QWidget *parent,
 
     this->mainStackedWidget = mainStackedWidget;
     this->masterWidget = parent;
+
+    ui->infoTextEdit->setPlainText("");
+    ui->contentTextEdit->setPlainText("");
+
+    isNewStorageFromMaster = true;
+}
+
+
+NewStorage::NewStorage(QWidget *parent,
+                       QStackedWidget *mainStackedWidget,
+                       QString name,
+                       QString description,
+                       QString login,
+                       QString password,
+                       QString info,
+                       QString content) :
+                       QWidget(parent),
+                       ui(new Ui::NewStorage)
+{
+    ui->setupUi(this);
+
+
+    this->mainStackedWidget = mainStackedWidget;
+    this->masterWidget = parent;
+
+    ui->nameLineEdit->setText(name);
+    ui->commentLineEdit->setText(description);
+    ui->contentTextEdit->setPlainText(content);
+
+    ui->newStorageLabel->setText("Изменить запись");
+
+
+    isNewStorageFromMaster = false;
 }
 
 
@@ -24,9 +59,20 @@ void NewStorage::on_cancelButon_clicked()
     connect(animation, &QPropertyAnimation::finished,
             [=]()
             {
-                this->mainStackedWidget->setCurrentWidget(masterWidget);
-                Master *master = qobject_cast<Master *>(masterWidget);
-                master->endAnimation();
+                if(isNewStorageFromMaster)
+                {
+                    this->mainStackedWidget->setCurrentWidget(masterWidget);
+                    Master *master = qobject_cast<Master *>(masterWidget);
+                    master->endAnimation();
+                }
+                else
+                {
+                    this->mainStackedWidget->setCurrentWidget(masterWidget);
+                    Storage *storage = qobject_cast<Storage *>(masterWidget);
+                    storage->endAnimation();
+                }
+
+
                 fadeEffect->setOpacity(1);
             });
 }
@@ -39,16 +85,41 @@ void NewStorage::on_confirmButton_clicked()
     connect(animation, &QPropertyAnimation::finished,
             [=]()
             {
-                this->mainStackedWidget->setCurrentWidget(masterWidget);
-                Master *master = qobject_cast<Master *>(masterWidget);
+                if(isNewStorageFromMaster)
+                {
+                    this->mainStackedWidget->setCurrentWidget(masterWidget);
+                    Master *master = qobject_cast<Master *>(masterWidget);
 
-                master->addNewStorage(ui->nameLineEdit->text(),
-                                      ui->commentLineEdit->text(),
-                                      ui->loginLineEdit->text(),
-                                      ui->passwordLineEdit->text(),
-                                      ui->infoTextEdit->toPlainText(),
-                                      ui->contentTextEdit->toPlainText());
-                master->endAnimation();
+                    master->addNewStorage(ui->nameLineEdit->text(),
+                                          ui->commentLineEdit->text(),
+                                          ui->loginLineEdit->text(),
+                                          ui->passwordLineEdit->text(),
+                                          ui->infoTextEdit->toPlainText(),
+                                          ui->contentTextEdit->toPlainText());
+                    master->endAnimation();
+
+                    ui->nameLineEdit->setText("");
+                    ui->commentLineEdit->setText("");
+                    ui->loginLineEdit->setText("");
+                    ui->passwordLineEdit->setText("");
+                    ui->infoTextEdit->setPlainText("");
+                    ui->contentTextEdit->setPlainText("");
+                }
+                else
+                {
+                    this->mainStackedWidget->setCurrentWidget(masterWidget);
+                    Storage *storage = qobject_cast<Storage *>(masterWidget);
+
+                    storage->storageChanged(ui->nameLineEdit->text(),
+                                            ui->commentLineEdit->text(),
+                                            ui->loginLineEdit->text(),
+                                            ui->passwordLineEdit->text(),
+                                            ui->infoTextEdit->toPlainText(),
+                                            ui->contentTextEdit->toPlainText());
+                    storage->endAnimation();
+                }
+
+
                 fadeEffect->setOpacity(1);
             });
 }

@@ -9,7 +9,10 @@
 #include <QStackedWidget>
 #include <QGraphicsOpacityEffect>
 
-#include "master_list_part.h"
+#include <QSqlDatabase>
+#include <QtSql>
+
+#include "settings.h"
 
 #include "new_contact.h"
 #include "new_note.h"
@@ -46,6 +49,8 @@ private:
     NewStorage *newStoragePage;
     NewNote *newNotePage;
 
+
+    Settings *settingsPage;
 
     QList <StorageItem *> storageItems;
     QList <ContactItem *> contactsItems;
@@ -90,24 +95,34 @@ public:
                        QString content);
 
 
-    //void startListAnimation();
-    //void endListAnimation();
+    void deleteNoteItem(int id);
+    void deleteContactItem(int id);
+    void deleteStorageItem(int id);
+
+
+    void updateNoteList();
+    void updateContactList();
+    void updateStorageList();
+
 
 
 
 private:
+    void initiateNotesList();
+    void initiateContactsList();
+    void initiateStoragesList();
 
-    void loadData();
-    void addData();
-
-    void fillListItems(QList<MasterListPart*> items,
-                       short id);
+    void loadNotesData();
+    void loadContactsData();
+    void loadStoragesData();
 
     void fillNotesList();
     void fillContactsList();
-    void fillStorageList();
+    void fillStoragesList();
 
     void replenishListItems();
+
+    void setColor();
 
 
 
@@ -117,11 +132,7 @@ public slots:
 
 private slots:
     void on_newButton_clicked();
-
     void on_settingsButton_clicked();
-    void on_accountButton_clicked();
-
-
 };
 
 #endif

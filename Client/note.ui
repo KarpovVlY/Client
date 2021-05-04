@@ -75,6 +75,70 @@
      <string>Заметка</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="editButton">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>7</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 0, 127);
+ border-style: solid;
+ border-radius:15px;
+ max-width:30px;
+ max-height:30px;
+ min-width:30px;
+ min-height:30px;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../../../../../Рабочий стол/ClientRes/create_white.png</normaloff>../../../../../Рабочий стол/ClientRes/create_white.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>25</width>
+      <height>25</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="deleteButon">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>7</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 0, 127);
+ border-style: solid;
+ border-radius:15px;
+ max-width:30px;
+ max-height:30px;
+ min-width:30px;
+ min-height:30px;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../../../../../Рабочий стол/ClientRes/delete_white.png</normaloff>../../../../../Рабочий стол/ClientRes/delete_white.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>25</width>
+      <height>25</height>
+     </size>
+    </property>
+   </widget>
   </widget>
   <widget class="QPlainTextEdit" name="contentPlainTextEdit">
    <property name="geometry">
@@ -84,6 +148,9 @@
      <width>400</width>
      <height>351</height>
     </rect>
+   </property>
+   <property name="mouseTracking">
+    <bool>false</bool>
    </property>
    <property name="styleSheet">
     <string notr="true">QPlainTextEdit{
@@ -174,82 +241,6 @@ QScrollBar:vertical
    </property>
    <property name="readOnly">
     <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QLabel" name="nameLabel">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>80</y>
-     <width>400</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>400</width>
-     <height>20</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>400</width>
-     <height>20</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>11</pointsize>
-     <weight>50</weight>
-     <bold>false</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"> max-width:400px;
- max-height:20px;
- min-width:400px;
- min-height:20px;</string>
-   </property>
-   <property name="text">
-    <string>Название</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="descriptionLabel">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>150</y>
-     <width>180</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>180</width>
-     <height>20</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>180</width>
-     <height>20</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>11</pointsize>
-     <weight>50</weight>
-     <bold>false</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"> max-width:180px;
- max-height:20px;
- min-width:180px;
- min-height:20px;</string>
-   </property>
-   <property name="text">
-    <string>Описание</string>
    </property>
   </widget>
   <widget class="QWidget" name="titleHint_1" native="true">
@@ -413,6 +404,66 @@ QScrollBar:vertical
      <string>Описание</string>
     </property>
    </widget>
+  </widget>
+  <widget class="QLineEdit" name="descriptionLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>150</y>
+     <width>400</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>IBeamCursor</cursorShape>
+   </property>
+   <property name="mouseTracking">
+    <bool>true</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-style: solid;
+border-radius: 10px; 
+
+color:  #FFF; 
+background-color: rgb(35, 38, 41); 
+selection-background-color: rgb(43,45,56);  
+
+
+padding-left: 10px;
+padding-right: 10px; 
+padding-top:5px;
+padding-bottom:5px;</string>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="nameLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>80</y>
+     <width>400</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-style: solid;
+border-radius: 10px; 
+
+color:  #FFF; 
+background-color: rgb(35, 38, 41); 
+selection-background-color: rgb(43,45,56);  
+
+
+padding-left: 10px;
+padding-right: 10px; 
+padding-top:5px;
+padding-bottom:5px;</string>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
   </widget>
  </widget>
  <resources/>

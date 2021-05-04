@@ -3,9 +3,17 @@
 
 #include <QString>
 
+#include <QGraphicsOpacityEffect>
+#include <QPropertyAnimation>
+
+
 class Stylesheet
 {
 public:
+
+
+    static QString databasePath;
+
     ///Master header stylesheets
     static QString masterHeaderParentStylesheetOn;
     static QString masterHeaderParentStylesheetOff;
@@ -13,11 +21,22 @@ public:
     static QString masterHeaderLabelStylesheetOn;
     static QString masterHeaderLabelStylesheetOff;
 
-    ///Master items stylesheets
+    static QString masterHeaderLineStylesheetOn;
+    static QString masterHeaderLineStylesheetOff;
 
+
+    ///Master items stylesheets
+    static QString masterItemsParentStylesheetOn;
 
     static QString masterItemsLabelStylesheetOn;
     static QString masterItemsLabelStylesheetOff;
+
+
+
+
+    static QString scrollAreaStylesheet;
+
+
 
 
 
@@ -27,4 +46,4 @@ public:
 
 };
 
-#endif // STYLESHEET_H
+#endif

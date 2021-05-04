@@ -25,6 +25,9 @@ private:
     QGraphicsOpacityEffect *fadeEffect;
     QPropertyAnimation *animation;
 
+    StorageItem *currentItem;
+
+
 public:
     Storage(QWidget *parent,
          QStackedWidget *mainStackedWidget,
@@ -32,17 +35,29 @@ public:
 
     ~Storage();
 
+    void storageChanged(QString name,
+                        QString description,
+                        QString login,
+                        QString password,
+                        QString info,
+                        QString content);
+
+
     void startAnimation();
     void endAnimation();
 
 
 private:
 
+    void cancel();
+    void deleteItem();
+
 
 private slots:
     void on_cancelButon_clicked();
 
-
+    void on_editButton_clicked();
+    void on_deleteButon_clicked();
 };
 
 #endif

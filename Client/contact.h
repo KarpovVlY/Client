@@ -15,6 +15,7 @@ class Contact : public QWidget
 
 public:
 
+
 private:
     Ui::Contact *ui;
 
@@ -25,6 +26,9 @@ private:
     QPropertyAnimation *animation;
 
 
+    ContactItem *currentItem;
+
+
 public:
     Contact(QWidget *parent,
          QStackedWidget *mainStackedWidget,
@@ -32,12 +36,27 @@ public:
 
     ~Contact();
 
+    void contactChanged(QString name,
+                        QString description,
+                        QString phone,
+                        QString email,
+                        QString content);
+
     void startAnimation();
     void endAnimation();
 
 
+private:
+
+    void cancel();
+    void deleteItem();
+
+
 private slots:
     void on_cancelButon_clicked();
+
+    void on_editButton_clicked();
+    void on_deleteButon_clicked();
 };
 
 #endif

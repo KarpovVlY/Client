@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -21,6 +21,7 @@ SOURCES += \
     new_storage.cpp \
     note.cpp \
     note_item.cpp \
+    settings.cpp \
     signup.cpp \
     storage.cpp \
     storage_item.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     new_storage.h \
     note.h \
     note_item.h \
+    settings.h \
     signup.h \
     storage.h \
     storage_item.h \
@@ -53,6 +55,7 @@ FORMS += \
     new_storage.ui \
     note.ui \
     note_item.ui \
+    settings.ui \
     signup.ui \
     storage.ui \
     storage_item.ui

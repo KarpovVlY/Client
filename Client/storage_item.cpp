@@ -3,6 +3,7 @@
 
 StorageItem::StorageItem(QWidget *parent,
                          int id,
+                         int uniqueId,
                          QString name,
                          QString description,
                          QString login,
@@ -17,8 +18,9 @@ StorageItem::StorageItem(QWidget *parent,
     ui->nameLabel->setText(name);
     ui->descriptionLabel->setText(description);
 
-
     this->id = id;
+    this->uniqueId = uniqueId;
+
     this->name = name;
     this->description = description;
     this->login = login;

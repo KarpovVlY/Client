@@ -64,26 +64,26 @@ QWidget:hover{
      <rect>
       <x>25</x>
       <y>25</y>
-      <width>180</width>
+      <width>320</width>
       <height>20</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>180</width>
+      <width>320</width>
       <height>20</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>180</width>
+      <width>320</width>
       <height>20</height>
      </size>
     </property>
     <property name="styleSheet">
-     <string notr="true"> max-width:180px;
+     <string notr="true"> max-width:320px;
  max-height:20px;
- min-width:180px;
+ min-width:320px;
  min-height:20px;</string>
     </property>
     <property name="text">
@@ -95,19 +95,19 @@ QWidget:hover{
      <rect>
       <x>25</x>
       <y>5</y>
-      <width>180</width>
+      <width>320</width>
       <height>20</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>180</width>
+      <width>320</width>
       <height>20</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>180</width>
+      <width>320</width>
       <height>20</height>
      </size>
     </property>
@@ -119,9 +119,9 @@ QWidget:hover{
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true"> max-width:180px;
+     <string notr="true"> max-width:320px;
  max-height:20px;
- min-width:180px;
+ min-width:320px;
  min-height:20px;</string>
     </property>
     <property name="text">

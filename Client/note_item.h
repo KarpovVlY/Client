@@ -16,14 +16,18 @@ public:
     QString description;
     QString content;
 
+    int uniqueId;
+
+    int id;
 private:
     Ui::NoteItem *ui;
 
-    int id;
+
 
 public:
     NoteItem(QWidget *parent,
              int id,
+             int uniqueId,
              QString name,
              QString description,
              QString content);

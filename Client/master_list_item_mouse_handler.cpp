@@ -3,16 +3,10 @@
 
 #include <QDebug>
 #include "master.h"
+#include "stylesheet.h"
 
-
-QString labelStylesheetOn = "background-color: rgb(30, 33, 36);  max-width:180px; max-height:20px; min-width:180px; min-height:20px;";
-QString labelStylesheetOff = "background-color: rgb(35, 38, 41);  max-width:180px; max-height:20px; min-width:180px; min-height:20px;";
-
-QString parentStyleSheetOn = "QWidget{ border-style: solid; background-color:rgb(35, 38, 41); border-radius:12px; max-width:370px; max-height:50px; min-width:370px; min-height:50px; }";
 
 Master *masterListItem;
-
-
 
 MasterListItemMouseHandler::MasterListItemMouseHandler(QObject *parent) :
                                                        QObject(parent)
@@ -38,16 +32,15 @@ bool MasterListItemMouseHandler::eventFilter(QObject *obj, QEvent *event)
     }
     else if(event->type() == QEvent::Enter)
     {
-        //parent->setStyleSheet(parentStyleSheetOn);
-        nameLabel->setStyleSheet(labelStylesheetOn);
-        descriptionLabel->setStyleSheet(labelStylesheetOn);
+        nameLabel->setStyleSheet(Stylesheet::masterItemsLabelStylesheetOn);
+        descriptionLabel->setStyleSheet(Stylesheet::masterItemsLabelStylesheetOn);
 
         return true;
     }
     else if(event->type() == QEvent::Leave)
     {
-        nameLabel->setStyleSheet(labelStylesheetOff);
-        descriptionLabel->setStyleSheet(labelStylesheetOff);
+        nameLabel->setStyleSheet(Stylesheet::masterItemsLabelStylesheetOff);
+        descriptionLabel->setStyleSheet(Stylesheet::masterItemsLabelStylesheetOff);
 
         return true;
     }

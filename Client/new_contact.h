@@ -6,8 +6,7 @@
 #include <QStackedWidget>
 #include <QGraphicsOpacityEffect>
 #include <QPropertyAnimation>
-#include <QLineEdit>
-#include <QPushButton>
+
 
 
 namespace Ui { class NewContact; }
@@ -21,37 +20,38 @@ public:
 
 private:
     Ui::NewContact *ui;
+
     QFormLayout *newContactScrollLayout;
-
-    QLineEdit *nameLineEdit;
-    QLineEdit *companyLineEdit;
-
-    QPushButton *numberPushButton;
-
 
     QStackedWidget *mainStackedWidget;
     QWidget *masterWidget;
+    QWidget *contactWidget;
 
     QGraphicsOpacityEffect *fadeEffect;
     QPropertyAnimation *animation;
 
-    QList<QLineEdit> editLinesList;
+    bool isNewContactFromMaster;
 
 
 public:
     NewContact(QWidget *parent,
                QStackedWidget *mainStackedWidget);
+
+    NewContact(QWidget *parent,
+               QStackedWidget *mainStackedWidget,
+               QString name,
+               QString description,
+               QString phone,
+               QString email,
+               QString content);
+
     ~NewContact();
 
     void startAnimation();
     void endAnimation();
 
 
-
 private:
-    void fillList();
-
-
 
 private slots:
     void on_confirmButton_clicked();

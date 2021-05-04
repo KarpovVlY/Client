@@ -3,17 +3,7 @@
 
 #include <QDebug>
 
-
-QString scrollAreaStylesheet = "QScrollBar:vertical { background-color: #2A2929;  width: 12px; margin: 15px 3px 15px 3px; border: 1px transparent #2A2929; border-radius: 3px; }"
-                               "QScrollBar::handle:vertical { background-color:  rgb(255, 0, 127); min-height: 5px; border-radius: 3px; }"
-                               "QScrollBar::sub-line:vertical { margin: 3px 0px 3px 0px; border-image: url(:/images/up_arrow_disabled.png); height: 10px; width: 10px; subcontrol-position: top; subcontrol-origin: margin; }"
-                               "QScrollBar::add-line:vertical { margin: 3px 0px 3px 0px; border-image: url(:/images/down_arrow_disabled.png); height: 10px; width: 10px; subcontrol-position: bottom; subcontrol-origin: margin; }"
-                               "QScrollBar::sub-line:vertical:hover,QScrollBar::sub-line:vertical:on { border-image: url(:/images/up_arrow.png); height: 10px; width: 10px; subcontrol-position: top; subcontrol-origin: margin; }"
-                               "QScrollBar::add-line:vertical:hover, QScrollBar::add-line:vertical:on { border-image: url(:/images/down_arrow.png); height: 10px; width: 10px; subcontrol-position: bottom; subcontrol-origin: margin; }"
-                               "QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical { background: none; }"
-                               "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical { background: none; }";
-
-
+#include "stylesheet.h"
 
 MasterHeaderMouseHandler *headerMouseHandlers[3];
 
@@ -34,6 +24,11 @@ QFormLayout *notesScrollWidgetLayout;
 
 
 
+int noteUniqueId;
+int contactUniqueId;
+int storageUniqueId;
+
+
 Master::Master(QWidget *parent,
                QStackedWidget *mainStackedWidget) :
                QWidget(parent),
@@ -41,8 +36,11 @@ Master::Master(QWidget *parent,
 {
     ui->setupUi(this);
 
+    setColor();
 
-
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("/home/vladislav/Work/Projects/VKR/ClientDataBase/ClientDB.db");
+    db.open();
 
 
     this->mainStackedWidget = mainStackedWidget;
@@ -52,12 +50,13 @@ Master::Master(QWidget *parent,
     newStoragePage = new NewStorage(this, mainStackedWidget);
     newNotePage = new NewNote(this, mainStackedWidget);
 
+    settingsPage = new Settings(this, mainStackedWidget);
+
 
     this->mainStackedWidget->addWidget(newContactPage);
     this->mainStackedWidget->addWidget(newStoragePage);
     this->mainStackedWidget->addWidget(newNotePage);
-
-
+    this->mainStackedWidget->addWidget(settingsPage);
 
 
     headerMouseHandlers[0] = new MasterHeaderMouseHandler(this);
@@ -71,112 +70,86 @@ Master::Master(QWidget *parent,
 
 
 
-
-    storageScrollArea = new QScrollArea(ui->stackedWidget);
-    contactsScrollArea = new QScrollArea(ui->stackedWidget);
-    notesScrollArea = new QScrollArea(ui->stackedWidget);
-
-
-    storageScrollAreaWidget = new QWidget();
-    contactsScrollAreaWidget = new QWidget();
-    notesScrollAreaWidget = new QWidget();
-
-
-    storageScrollArea->setWidget(storageScrollAreaWidget);
-    storageScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    storageScrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    storageScrollArea->setWidgetResizable(true);
-
-    contactsScrollArea->setWidget(contactsScrollAreaWidget);
-    contactsScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    contactsScrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    contactsScrollArea->setWidgetResizable(true);
-
-    notesScrollArea->setWidget(notesScrollAreaWidget);
-    notesScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    notesScrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    notesScrollArea->setWidgetResizable(true);
-
-
-    storageScrollWidgetLayout = new QFormLayout(storageScrollAreaWidget);
-    contactsScrollWidgetLayout = new QFormLayout(contactsScrollAreaWidget);
-    notesScrollWidgetLayout = new QFormLayout(notesScrollAreaWidget);
-
-    storageScrollWidgetLayout->setSpacing(15);
-    contactsScrollWidgetLayout->setSpacing(15);
-    notesScrollWidgetLayout->setSpacing(15);
-
-
-
-    ui->stackedWidget->addWidget(storageScrollArea);
-    ui->stackedWidget->addWidget(contactsScrollArea);
-    ui->stackedWidget->addWidget(notesScrollArea);
-
+    initiateNotesList();
+    initiateContactsList();
+    initiateStoragesList();
 
 
     ui->stackedWidget->setCurrentWidget(storageScrollArea);
+    ui->stackedWidget->setFixedHeight(480);
 
 
+    loadNotesData();
+    loadContactsData();
+    loadStoragesData();
 
-ui->stackedWidget->setFixedHeight(480);
-
-
-    loadData();
-    fillStorageList();
-    //fillListItems(storageItems, 1);
+    fillStoragesList();
 }
 
 
-
-
-
-void Master::loadData()
+void Master::setColor()
 {
-    for(int i = 0 ; i < 15 ; i ++)
+    /*ui->categoryWidget->setStyleSheet(Stylesheet::whiteHeaderStylesheet);
+    ui->toolsWidget->setStyleSheet(Stylesheet::whiteHeaderStylesheet);
+    ui->settingsButton->setStyleSheet(Stylesheet::whiteButtonStylesheet);
+    ui->newButton->setStyleSheet(Stylesheet::whiteButtonStylesheet);
+
+
+    ui->notesLabel->setStyleSheet(Stylesheet::whiteMasterHeaderLabelStylesheetOn);
+*/
+
+}
+
+
+/** Notes
+ *
+ */
+void Master::loadNotesData()
+{
+    QSqlQuery query;
+    int count = 0;
+
+    notesItems.clear();
+
+    query.exec("SELECT id, name, description, content FROM notes");
+    while (query.next())
     {
-        StorageItem *item = new StorageItem(nullptr, i, "storage", QString::number(i), "", "", "", "");
-
-        item->setMaster(this);
-        item->setFixedSize(QSize(370, 50));
-
-        storageItems.append(item);
-    }
-
-
-    for(int i = 0 ; i < 3 ; i ++)
-    {
-        NoteItem *item = new NoteItem(nullptr, i, "note", QString::number(i), "");
+        NoteItem *item = new NoteItem(nullptr, count,
+                                      query.value(0).toInt(),
+                                      query.value(1).toString(),
+                                      query.value(2).toString(),
+                                      query.value(3).toString());
 
         item->setMaster(this);
         item->setFixedSize(QSize(370, 50));
 
         notesItems.append(item);
+
+        ++count;
     }
 
-    for(int i = 0 ; i < 5 ; i ++)
-    {
-        ContactItem *item = new ContactItem(nullptr, i, "contact", QString::number(i), "", "", "");
+    if(notesItems.size() == 0)
+        noteUniqueId = 1;
+    else
+        noteUniqueId = notesItems[notesItems.size() - 1]->uniqueId + 1;
 
-        item->setMaster(this);
-        item->setFixedSize(QSize(370, 50));
-
-        contactsItems.append(item);
-    }
-
-
+    fillNotesList();
 }
-
-
-
-
 
 
 void Master::addNewNote(QString name,
                         QString description,
                         QString content)
 {
-    NoteItem *item = new NoteItem(nullptr, notesItems.size(), name, description,
-                                  content);
+    QSqlQuery query;
+    query.exec("INSERT INTO notes (id, name, description, content) VALUES ('" +
+                QString::number(noteUniqueId) + "','" + name +
+                "','" + description + "','" + content + "')");
+
+
+    NoteItem *item = new NoteItem(nullptr, notesItems.size(),
+                                  noteUniqueId, name,
+                                  description,content);
 
     item->setMaster(this);
     item->setFixedSize(QSize(370, 50));
@@ -184,7 +157,92 @@ void Master::addNewNote(QString name,
     notesItems.append(item);
 
     notesScrollWidgetLayout->addWidget(item);
+
+    ++noteUniqueId;
 }
+
+
+void Master::updateNoteList()
+{
+    ui->stackedWidget->removeWidget(notesScrollArea);
+
+    initiateNotesList();
+
+    ui->stackedWidget->setCurrentWidget(notesScrollArea);
+
+    loadNotesData();
+}
+
+
+void Master::initiateNotesList()
+{
+    notesScrollArea = new QScrollArea(ui->stackedWidget);
+    notesScrollAreaWidget = new QWidget();
+    notesScrollArea->setWidget(notesScrollAreaWidget);
+    notesScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    notesScrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    notesScrollArea->setWidgetResizable(true);
+    notesScrollWidgetLayout = new QFormLayout(notesScrollAreaWidget);
+    notesScrollWidgetLayout->setSpacing(15);
+
+    ui->stackedWidget->addWidget(notesScrollArea);
+}
+
+
+void Master::fillNotesList()
+{
+    ui->stackedWidget->setCurrentWidget(notesScrollArea);
+    notesScrollArea->setStyleSheet(Stylesheet::scrollAreaStylesheet);
+
+    for(int i = 0 ; i < notesItems.length() ; i ++)
+        notesScrollWidgetLayout->addWidget(notesItems[i]);
+}
+
+
+void Master::deleteNoteItem(int id)
+{
+    notesItems.removeAt(id);
+    updateNoteList();
+}
+
+
+/** Contacts
+ *
+ */
+void Master::loadContactsData()
+{
+    QSqlQuery query;
+    int count = 0;
+
+    contactsItems.clear();
+
+    query.exec("SELECT id, name, description, phone, email, content FROM contacts");
+    while (query.next())
+    {
+        ContactItem *item = new ContactItem(nullptr, count,
+                                      query.value(0).toInt(),
+                                      query.value(1).toString(),
+                                      query.value(2).toString(),
+                                      query.value(3).toString(),
+                                      query.value(4).toString(),
+                                      query.value(5).toString());
+
+        item->setMaster(this);
+        item->setFixedSize(QSize(370, 50));
+
+        contactsItems.append(item);
+
+        ++count;
+    }
+
+    if(contactsItems.size() == 0)
+        contactUniqueId = 1;
+    else
+        contactUniqueId = contactsItems[contactsItems.size() - 1]->uniqueId + 1;
+
+     fillContactsList();
+}
+
 
 void Master::addNewContact(QString name,
                            QString description,
@@ -192,14 +250,108 @@ void Master::addNewContact(QString name,
                            QString email,
                            QString content)
 {
-    ContactItem *item = new ContactItem(nullptr, contactsItems.size(), name, description,
-                                        phone, email, content);
+    QSqlQuery query;
+    query.exec("INSERT INTO contacts (id, name, description, phone, email, content) VALUES ('" +
+                QString::number(contactUniqueId) + "','" + name + "','" + description + "','" +
+                phone + "','" + email + "','" + content + "')");
+
+
+    ContactItem *item = new ContactItem(nullptr, contactsItems.size(),
+                                        contactUniqueId, name,
+                                        description, phone,
+                                        email, content);
     item->setMaster(this);
     item->setFixedSize(QSize(370, 50));
 
     contactsItems.append(item);
 
     contactsScrollWidgetLayout->addWidget(item);
+
+    ++contactUniqueId;
+}
+
+
+void Master::updateContactList()
+{
+    ui->stackedWidget->removeWidget(contactsScrollArea);
+
+    initiateContactsList();
+
+    ui->stackedWidget->setCurrentWidget(contactsScrollArea);
+
+    loadContactsData();
+}
+
+
+void Master::initiateContactsList()
+{
+    contactsScrollArea = new QScrollArea(ui->stackedWidget);
+    contactsScrollAreaWidget = new QWidget();
+    contactsScrollArea->setWidget(contactsScrollAreaWidget);
+    contactsScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    contactsScrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    contactsScrollArea->setWidgetResizable(true);
+    contactsScrollWidgetLayout = new QFormLayout(contactsScrollAreaWidget);
+    contactsScrollWidgetLayout->setSpacing(15);
+
+    ui->stackedWidget->addWidget(contactsScrollArea);
+}
+
+
+void Master::fillContactsList()
+{
+    ui->stackedWidget->setCurrentWidget(contactsScrollArea);
+    contactsScrollArea->setStyleSheet(Stylesheet::scrollAreaStylesheet);
+
+    for(int i = 0 ; i < contactsItems.length() ; i ++)
+        contactsScrollWidgetLayout->addWidget(contactsItems[i]);
+}
+
+
+void Master::deleteContactItem(int id)
+{
+    contactsItems.removeAt(id);
+    updateContactList();
+}
+
+
+/** Storages
+ *
+ */
+void Master::loadStoragesData()
+{
+    QSqlQuery query;
+    int count = 0;
+
+    storageItems.clear();
+
+    count = 0;
+    query.exec("SELECT id, name, description, login, password, info, content FROM storages");
+    while (query.next())
+    {
+        StorageItem *item = new StorageItem(nullptr, count,
+                                      query.value(0).toInt(),
+                                      query.value(1).toString(),
+                                      query.value(2).toString(),
+                                      query.value(3).toString(),
+                                      query.value(4).toString(),
+                                      query.value(5).toString(),
+                                      query.value(6).toString());
+
+        item->setMaster(this);
+        item->setFixedSize(QSize(370, 50));
+
+        storageItems.append(item);
+
+        ++count;
+    }
+
+    if(storageItems.size() == 0)
+        storageUniqueId = 1;
+    else
+        storageUniqueId = storageItems[storageItems.size() - 1]->uniqueId + 1;
+
+     fillStoragesList();
 }
 
 
@@ -210,7 +362,15 @@ void Master::addNewStorage(QString name,
                            QString info,
                            QString content)
 {
-    StorageItem *item = new StorageItem(nullptr, contactsItems.size(), name, description,
+    QSqlQuery query;
+    query.exec("INSERT INTO storages (id, name, description, login, password, info, content) VALUES ('" +
+                QString::number(storageUniqueId) + "','" + name + "','" +
+                description + "','" + login + "','" + password + "','" +
+                info + "','" + content + "')");
+
+
+    StorageItem *item = new StorageItem(nullptr, storageItems.size(),
+                                        storageUniqueId, name, description,
                                         login, password, info, content);
 
     item->setMaster(this);
@@ -219,9 +379,59 @@ void Master::addNewStorage(QString name,
     storageItems.append(item);
 
     storageScrollWidgetLayout->addWidget(item);
+
+    ++storageUniqueId;
 }
 
 
+void Master::updateStorageList()
+{
+    ui->stackedWidget->removeWidget(storageScrollArea);
+
+    initiateStoragesList();
+
+    ui->stackedWidget->setCurrentWidget(storageScrollArea);
+
+    loadStoragesData();
+}
+
+
+void Master::initiateStoragesList()
+{
+    storageScrollArea = new QScrollArea(ui->stackedWidget);
+    storageScrollAreaWidget = new QWidget();
+    storageScrollArea->setWidget(storageScrollAreaWidget);
+    storageScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    storageScrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    storageScrollArea->setWidgetResizable(true);
+    storageScrollWidgetLayout = new QFormLayout(storageScrollAreaWidget);
+    storageScrollWidgetLayout->setSpacing(15);
+
+    ui->stackedWidget->addWidget(storageScrollArea);
+}
+
+
+void Master::fillStoragesList()
+{
+    ui->stackedWidget->setCurrentWidget(storageScrollArea);
+    storageScrollArea->setStyleSheet(Stylesheet::scrollAreaStylesheet);
+
+    for(int i = 0 ; i < storageItems.length() ; i ++)
+        storageScrollWidgetLayout->addWidget(storageItems[i]);
+}
+
+
+void Master::deleteStorageItem(int id)
+{
+    storageItems.removeAt(id);
+    updateStorageList();
+}
+
+
+
+
+/**
+ */
 void Master::tabChanged(short id)
 {
     for(int i = 0 ; i < 3 ; i ++)
@@ -238,7 +448,7 @@ void Master::tabChanged(short id)
     else if(id == 1)
     {
         if(currentId != 1)
-            fillStorageList();
+            fillStoragesList();
     }
     else
     {
@@ -254,7 +464,6 @@ void Master::tabChanged(short id)
 void Master::itemSelected(int id,
                           short type)
 {
-
     if(type == 0)
     {
         Contact *contact = new Contact(this, mainStackedWidget, contactsItems[id]);
@@ -265,7 +474,6 @@ void Master::itemSelected(int id,
         connect(animation, &QPropertyAnimation::finished,
                 [=]()
                 {
-
                     this->mainStackedWidget->setCurrentWidget(contact);
 
                     contact->endAnimation();
@@ -278,13 +486,11 @@ void Master::itemSelected(int id,
         Storage *storage = new Storage(this, mainStackedWidget, storageItems[id]);
         this->mainStackedWidget->addWidget(storage);
 
-
         startAnimation();
 
         connect(animation, &QPropertyAnimation::finished,
                 [=]()
                 {
-
                     this->mainStackedWidget->setCurrentWidget(storage);
 
                     storage->endAnimation();
@@ -302,7 +508,6 @@ void Master::itemSelected(int id,
         connect(animation, &QPropertyAnimation::finished,
                 [=]()
                 {
-
                     this->mainStackedWidget->setCurrentWidget(note);
 
                     note->endAnimation();
@@ -310,72 +515,10 @@ void Master::itemSelected(int id,
                     fadeEffect->setOpacity(1);
                 });
     }
-
-
-
-
-}
-
-void Master::fillNotesList()
-{
-    ui->stackedWidget->setCurrentWidget(notesScrollArea);
-    notesScrollArea->setStyleSheet(scrollAreaStylesheet);
-
-    for(int i = 0 ; i < notesItems.length() ; i ++)
-        notesScrollWidgetLayout->addWidget(notesItems[i]);
 }
 
 
-void Master::fillContactsList()
-{
-    ui->stackedWidget->setCurrentWidget(contactsScrollArea);
-    contactsScrollArea->setStyleSheet(scrollAreaStylesheet);
-
-    for(int i = 0 ; i < contactsItems.length() ; i ++)
-        contactsScrollWidgetLayout->addWidget(contactsItems[i]);
-
-}
-
-
-void Master::fillStorageList()
-{
-    ui->stackedWidget->setCurrentWidget(storageScrollArea);
-    storageScrollArea->setStyleSheet(scrollAreaStylesheet);
-
-    for(int i = 0 ; i < storageItems.length() ; i ++)
-        storageScrollWidgetLayout->addWidget(storageItems[i]);
-}
-
-void Master::fillListItems(QList<MasterListPart*> items, short id)
-{
-    QFormLayout *bufferLayout;
-    QScrollArea *bufferScrollArea;
-
-    if(id == 0)
-    {
-        bufferLayout = contactsScrollWidgetLayout;
-        bufferScrollArea = contactsScrollArea;
-    }
-    else if(id == 1)
-    {
-        bufferLayout = storageScrollWidgetLayout;
-        bufferScrollArea = storageScrollArea;
-    }
-    else
-    {
-        bufferLayout = notesScrollWidgetLayout;
-        bufferScrollArea = notesScrollArea;
-    }
-
-    ui->stackedWidget->setCurrentWidget(bufferScrollArea);
-    bufferScrollArea->setStyleSheet(scrollAreaStylesheet);
-
-    for(int i = 0 ; i < items.length() ; i ++)
-        bufferLayout->addWidget(items[i]);
-}
-
-
-
+///New button listener
 void Master::on_newButton_clicked()
 {
     startAnimation();
@@ -399,21 +542,23 @@ void Master::on_newButton_clicked()
                     newNotePage->endAnimation();
                 }
 
-
                 fadeEffect->setOpacity(1);
             });
 }
 
-
+///Settings button listener
 void Master::on_settingsButton_clicked()
 {
+    startAnimation();
 
+    connect(animation, &QPropertyAnimation::finished,
+            [=]()
+            {
+                mainStackedWidget->setCurrentWidget(settingsPage);
+                settingsPage->endAnimation();
 
-}
-
-
-void Master::on_accountButton_clicked()
-{
+                fadeEffect->setOpacity(1);
+            });
 
 }
 
@@ -448,28 +593,17 @@ Master::~Master()
 {
     delete ui;
     delete newContactPage;
+    delete newNotePage;
+    delete newStoragePage;
 
     delete animation;
     delete fadeEffect;
 
 
-    delete mainStackedWidget;
-
-    delete contactsScrollArea;
-    delete contactsScrollAreaWidget;
-    delete contactsScrollWidgetLayout;
-
-    delete storageScrollArea;
-    delete storageScrollAreaWidget;
-    delete storageScrollWidgetLayout;
-
-    delete notesScrollArea;
-    delete notesScrollAreaWidget;
-    delete notesScrollWidgetLayout;
-
 
     storageItems.clear();
     contactsItems.clear();
     notesItems.clear();
+
 
 }

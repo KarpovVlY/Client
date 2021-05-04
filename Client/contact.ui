@@ -62,7 +62,7 @@
      <rect>
       <x>50</x>
       <y>5</y>
-      <width>81</width>
+      <width>91</width>
       <height>30</height>
      </rect>
     </property>
@@ -73,6 +73,70 @@
     </property>
     <property name="text">
      <string>Контакт</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="deleteButon">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>7</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 0, 127);
+ border-style: solid;
+ border-radius:15px;
+ max-width:30px;
+ max-height:30px;
+ min-width:30px;
+ min-height:30px;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../../../../../Рабочий стол/ClientRes/delete_white.png</normaloff>../../../../../Рабочий стол/ClientRes/delete_white.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>25</width>
+      <height>25</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="editButton">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>7</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 0, 127);
+ border-style: solid;
+ border-radius:15px;
+ max-width:30px;
+ max-height:30px;
+ min-width:30px;
+ min-height:30px;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../../../../../Рабочий стол/ClientRes/create_white.png</normaloff>../../../../../Рабочий стол/ClientRes/create_white.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>25</width>
+      <height>25</height>
+     </size>
     </property>
    </widget>
   </widget>
@@ -129,44 +193,6 @@
      <string>Имя</string>
     </property>
    </widget>
-  </widget>
-  <widget class="QLabel" name="nameLabel">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>80</y>
-     <width>400</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>400</width>
-     <height>20</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>400</width>
-     <height>20</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>11</pointsize>
-     <weight>50</weight>
-     <bold>false</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"> max-width:400px;
- max-height:20px;
- min-width:400px;
- min-height:20px;</string>
-   </property>
-   <property name="text">
-    <string>Имя</string>
-   </property>
   </widget>
   <widget class="QPlainTextEdit" name="contentPlainTextEdit">
    <property name="geometry">
@@ -376,82 +402,6 @@ QScrollBar:vertical
     </property>
    </widget>
   </widget>
-  <widget class="QLabel" name="descriptionLabel">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>140</y>
-     <width>400</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>400</width>
-     <height>20</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>400</width>
-     <height>20</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>11</pointsize>
-     <weight>50</weight>
-     <bold>false</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"> max-width:400px;
- max-height:20px;
- min-width:400px;
- min-height:20px;</string>
-   </property>
-   <property name="text">
-    <string>Компания</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="phoneLabel">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>220</y>
-     <width>400</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>400</width>
-     <height>20</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>400</width>
-     <height>20</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>11</pointsize>
-     <weight>50</weight>
-     <bold>false</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"> max-width:400px;
- max-height:20px;
- min-width:400px;
- min-height:20px;</string>
-   </property>
-   <property name="text">
-    <string>Телефон</string>
-   </property>
-  </widget>
   <widget class="QWidget" name="titleHint_4" native="true">
    <property name="geometry">
     <rect>
@@ -506,44 +456,6 @@ QScrollBar:vertical
     </property>
    </widget>
   </widget>
-  <widget class="QLabel" name="emailLabel">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>290</y>
-     <width>400</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>400</width>
-     <height>20</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>400</width>
-     <height>20</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>11</pointsize>
-     <weight>50</weight>
-     <bold>false</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"> max-width:400px;
- max-height:20px;
- min-width:400px;
- min-height:20px;</string>
-   </property>
-   <property name="text">
-    <string>Почта</string>
-   </property>
-  </widget>
   <widget class="QWidget" name="titleHint_5" native="true">
    <property name="geometry">
     <rect>
@@ -597,6 +509,114 @@ QScrollBar:vertical
      <string>Электронная почта</string>
     </property>
    </widget>
+  </widget>
+  <widget class="QLineEdit" name="phoneLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>220</y>
+     <width>400</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-style: solid;
+border-radius: 10px; 
+
+color:  #FFF; 
+background-color: rgb(35, 38, 41); 
+selection-background-color: rgb(43,45,56);  
+
+
+padding-left: 10px;
+padding-right: 10px; 
+padding-top:5px;
+padding-bottom:5px;</string>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="emailLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>290</y>
+     <width>400</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-style: solid;
+border-radius: 10px; 
+
+color:  #FFF; 
+background-color: rgb(35, 38, 41); 
+selection-background-color: rgb(43,45,56);  
+
+
+padding-left: 10px;
+padding-right: 10px; 
+padding-top:5px;
+padding-bottom:5px;</string>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="companyLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>140</y>
+     <width>400</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-style: solid;
+border-radius: 10px; 
+
+color:  #FFF; 
+background-color: rgb(35, 38, 41); 
+selection-background-color: rgb(43,45,56);  
+
+
+padding-left: 10px;
+padding-right: 10px; 
+padding-top:5px;
+padding-bottom:5px;</string>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="nameLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>80</y>
+     <width>400</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-style: solid;
+border-radius: 10px; 
+
+color:  #FFF; 
+background-color: rgb(35, 38, 41); 
+selection-background-color: rgb(43,45,56);  
+
+
+padding-left: 10px;
+padding-right: 10px; 
+padding-top:5px;
+padding-bottom:5px;</string>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
   </widget>
  </widget>
  <resources/>

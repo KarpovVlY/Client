@@ -25,12 +25,12 @@
    <property name="styleSheet">
     <string notr="true">background-color: rgb(40, 46, 51);</string>
    </property>
-   <widget class="QLabel" name="newContactLabel">
+   <widget class="QLabel" name="newStorageLabel">
     <property name="geometry">
      <rect>
       <x>50</x>
       <y>5</y>
-      <width>141</width>
+      <width>241</width>
       <height>30</height>
      </rect>
     </property>
@@ -222,10 +222,13 @@ QScrollBar:vertical
      <enum>Qt::ScrollBarAsNeeded</enum>
     </property>
     <property name="plainText">
-     <string>Комментарий</string>
+     <string/>
     </property>
     <property name="tabStopWidth">
      <number>20</number>
+    </property>
+    <property name="placeholderText">
+     <string>Комментарий</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="nameLineEdit">
@@ -233,7 +236,7 @@ QScrollBar:vertical
      <rect>
       <x>10</x>
       <y>20</y>
-      <width>244</width>
+      <width>324</width>
       <height>34</height>
      </rect>
     </property>
@@ -246,9 +249,9 @@ QScrollBar:vertical
 	padding-right: 20px; 
 	background-color: rgb(35, 38, 41); 
 	selection-background-color: rgb(43,45,56);  
-	max-width:200px; 
+	max-width:280px; 
 	max-height:30px;
-	min-width:200px; 
+	min-width:280px; 
 	min-height:30px;
 }
  
@@ -263,6 +266,9 @@ QLineEdit:focus{
 </string>
     </property>
     <property name="text">
+     <string/>
+    </property>
+    <property name="placeholderText">
      <string>Название</string>
     </property>
    </widget>
@@ -271,7 +277,7 @@ QLineEdit:focus{
      <rect>
       <x>10</x>
       <y>70</y>
-      <width>244</width>
+      <width>324</width>
       <height>34</height>
      </rect>
     </property>
@@ -284,9 +290,9 @@ QLineEdit:focus{
 	padding-right: 20px; 
 	background-color: rgb(35, 38, 41); 
 	selection-background-color: rgb(43,45,56);  
-	max-width:200px; 
+	max-width:280px; 
 	max-height:30px;
-	min-width:200px; 
+	min-width:280px; 
 	min-height:30px;
 }
  
@@ -301,7 +307,10 @@ QLineEdit:focus{
 </string>
     </property>
     <property name="text">
-     <string>Комментарий</string>
+     <string/>
+    </property>
+    <property name="placeholderText">
+     <string>Описание</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="passwordLineEdit">
@@ -309,7 +318,7 @@ QLineEdit:focus{
      <rect>
       <x>10</x>
       <y>190</y>
-      <width>244</width>
+      <width>324</width>
       <height>34</height>
      </rect>
     </property>
@@ -322,9 +331,9 @@ QLineEdit:focus{
 	padding-right: 20px; 
 	background-color: rgb(35, 38, 41); 
 	selection-background-color: rgb(43,45,56);  
-	max-width:200px; 
+	max-width:280px; 
 	max-height:30px;
-	min-width:200px; 
+	min-width:280px; 
 	min-height:30px;
 }
  
@@ -339,6 +348,9 @@ QLineEdit:focus{
 </string>
     </property>
     <property name="text">
+     <string/>
+    </property>
+    <property name="placeholderText">
      <string>Пароль</string>
     </property>
    </widget>
@@ -347,7 +359,7 @@ QLineEdit:focus{
      <rect>
       <x>10</x>
       <y>140</y>
-      <width>244</width>
+      <width>324</width>
       <height>34</height>
      </rect>
     </property>
@@ -360,9 +372,9 @@ QLineEdit:focus{
 	padding-right: 20px; 
 	background-color: rgb(35, 38, 41); 
 	selection-background-color: rgb(43,45,56);  
-	max-width:200px; 
+	max-width:280px; 
 	max-height:30px;
-	min-width:200px; 
+	min-width:280px; 
 	min-height:30px;
 }
  
@@ -377,6 +389,9 @@ QLineEdit:focus{
 </string>
     </property>
     <property name="text">
+     <string/>
+    </property>
+    <property name="placeholderText">
      <string>Логин</string>
     </property>
    </widget>
@@ -485,10 +500,13 @@ QScrollBar:vertical
      <enum>Qt::ScrollBarAsNeeded</enum>
     </property>
     <property name="plainText">
-     <string>Дополнительная информация</string>
+     <string/>
     </property>
     <property name="tabStopWidth">
      <number>20</number>
+    </property>
+    <property name="placeholderText">
+     <string>Дополнительная информация</string>
     </property>
    </widget>
   </widget>

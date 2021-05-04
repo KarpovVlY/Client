@@ -3,6 +3,8 @@
 
 #include "master.h"
 
+NewStorage *newStoragePage;
+
 Storage::Storage(QWidget *parent,
            QStackedWidget *mainStackedWidget,
            StorageItem *item) :
@@ -14,17 +16,19 @@ Storage::Storage(QWidget *parent,
     this->mainStackedWidget = mainStackedWidget;
     this->masterWidget = parent;
 
-    ui->nameLabel->setText(item->name);
-    ui->descriptionLabel->setText(item->description);
-    ui->loginLabel->setText(item->login);
-    ui->passwordLabel->setText(item->password);
+
+    this->currentItem = item;
+
+
+    ui->nameLineEdit->setText(item->name);
+    ui->descriptionLineEdit->setText(item->description);
+    ui->loginLineEdit->setText(item->login);
+    ui->passwordLineEdit->setText(item->password);
     ui->infoPlainTextEdit->setPlainText(item->info);
     ui->contentPlainTextEdit->setPlainText(item->content);
 
 
 }
-
-
 
 void Storage::on_cancelButon_clicked()
 {
@@ -40,6 +44,99 @@ void Storage::on_cancelButon_clicked()
                 fadeEffect->setOpacity(1);
             });
 }
+
+
+void Storage::on_editButton_clicked()
+{
+    newStoragePage = new NewStorage(this,
+                                    mainStackedWidget,
+                                    currentItem->name,
+                                    currentItem->description,
+                                    currentItem->login,
+                                    currentItem->password,
+                                    currentItem->info,
+                                    currentItem->content);
+
+    mainStackedWidget->addWidget(newStoragePage);
+
+    startAnimation();
+
+    connect(animation, &QPropertyAnimation::finished,
+            [=]()
+            {
+                mainStackedWidget->setCurrentWidget(newStoragePage);
+
+                newStoragePage->endAnimation();
+
+                fadeEffect->setOpacity(1);
+            });
+
+}
+
+
+void Storage::on_deleteButon_clicked()
+{
+
+    QSqlQuery query;
+    query.exec("DELETE FROM storages WHERE id = " + QString::number(currentItem->uniqueId));
+
+
+    startAnimation();
+
+    connect(animation, &QPropertyAnimation::finished,
+            [=]()
+            {
+                this->mainStackedWidget->setCurrentWidget(masterWidget);
+                Master *master = qobject_cast<Master *>(masterWidget);
+                master->endAnimation();
+                master->deleteStorageItem(currentItem->id);
+
+                fadeEffect->setOpacity(1);
+            });
+
+}
+
+
+void Storage::storageChanged(QString name,
+                             QString description,
+                             QString login,
+                             QString password,
+                             QString info,
+                             QString content)
+{
+    mainStackedWidget->removeWidget(newStoragePage);
+
+
+    currentItem->name = name;
+    currentItem->description = description;
+    currentItem->login = login;
+    currentItem->password = password;
+    currentItem->info = info;
+    currentItem->content = content;
+
+    ui->nameLineEdit->setText(name);
+    ui->descriptionLineEdit->setText(description);
+    ui->loginLineEdit->setText(login);
+    ui->passwordLineEdit->setText(password);
+    ui->infoPlainTextEdit->setPlaceholderText(info);
+    ui->contentPlainTextEdit->setPlainText(content);
+
+
+    QSqlQuery query;
+    query.exec("UPDATE storages SET name = '" + name +
+               "', description = '" + description +
+               "', login = '" + login +
+               "', password = '" + password +
+               "', info = '" + info +
+               "', content = '" + content +
+               "' WHERE id = " + QString::number(currentItem->uniqueId));
+
+
+
+    Master *master = qobject_cast<Master *>(masterWidget);
+    master->updateStorageList();
+}
+
 
 
 void Storage::startAnimation()
@@ -71,4 +168,6 @@ Storage::~Storage()
 {
     delete ui;
 }
+
+
 

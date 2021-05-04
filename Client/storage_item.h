@@ -18,14 +18,18 @@ public:
     QString info;
     QString content;
 
+    int uniqueId;
+
+    int id;
 private:
     Ui::StorageItem *ui;
 
-    int id;
+
 
 public:
     StorageItem(QWidget *parent,
                 int id,
+                int uniqueId,
                 QString name,
                 QString description,
                 QString login,

@@ -18,14 +18,28 @@ private:
     Ui::NewStorage *ui;
 
     QStackedWidget *mainStackedWidget;
+
     QWidget *masterWidget;
+    QWidget storageWidget;
 
     QGraphicsOpacityEffect *fadeEffect;
     QPropertyAnimation *animation;
 
+    bool isNewStorageFromMaster;
+
 public:
     NewStorage(QWidget *parent,
                QStackedWidget *mainStackedWidget);
+
+    NewStorage(QWidget *parent,
+               QStackedWidget *mainStackedWidget,
+               QString name,
+               QString description,
+               QString login,
+               QString password,
+               QString info,
+               QString content);
+
     ~NewStorage();
 
     void startAnimation();

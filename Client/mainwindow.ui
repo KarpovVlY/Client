@@ -39,7 +39,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(58, 64, 71);</string>
+     <string notr="true">background-color: rgb(58, 64, 71)</string>
     </property>
     <widget class="QPushButton" name="exitButton">
      <property name="enabled">

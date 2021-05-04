@@ -14,14 +14,15 @@ Contact::Contact(QWidget *parent,
     this->mainStackedWidget = mainStackedWidget;
     this->masterWidget = parent;
 
-    ui->nameLabel->setText(item->name);
-    ui->descriptionLabel->setText(item->description);
-    ui->phoneLabel->setText(item->phone);
-    ui->emailLabel->setText(item->email);
+
+    this->currentItem = item;
+
+
+    ui->nameLineEdit->setText(item->name);
+    ui->companyLineEdit->setText(item->description);
+    ui->phoneLineEdit->setText(item->phone);
+    ui->emailLineEdit->setText(item->email);
     ui->contentPlainTextEdit->setPlainText(item->content);
-
-
-
 }
 
 
@@ -39,6 +40,91 @@ void Contact::on_cancelButon_clicked()
                 fadeEffect->setOpacity(1);
             });
 }
+
+
+void Contact::on_editButton_clicked()
+{
+    NewContact *newContactPage = new NewContact(this,
+                                       mainStackedWidget,
+                                       currentItem->name,
+                                       currentItem->description,
+                                       currentItem->phone,
+                                       currentItem->email,
+                                       currentItem->content);
+
+    mainStackedWidget->addWidget(newContactPage);
+
+    startAnimation();
+
+    connect(animation, &QPropertyAnimation::finished,
+            [=]()
+            {
+                mainStackedWidget->setCurrentWidget(newContactPage);
+
+                newContactPage->endAnimation();
+
+                fadeEffect->setOpacity(1);
+            });
+
+
+}
+
+
+void Contact::on_deleteButon_clicked()
+{
+    QSqlQuery query;
+    query.exec("DELETE FROM contacts WHERE id = " + QString::number(currentItem->uniqueId));
+
+
+    startAnimation();
+
+    connect(animation, &QPropertyAnimation::finished,
+            [=]()
+            {
+                this->mainStackedWidget->setCurrentWidget(masterWidget);
+                Master *master = qobject_cast<Master *>(masterWidget);
+                master->endAnimation();
+                master->deleteContactItem(currentItem->id);
+
+                fadeEffect->setOpacity(1);
+            });
+}
+
+
+
+void Contact::contactChanged(QString name,
+                             QString description,
+                             QString phone,
+                             QString email,
+                             QString content)
+{
+
+    currentItem->name = name;
+    currentItem->description = description;
+    currentItem->phone = phone;
+    currentItem->email = email;
+    currentItem->content = content;
+
+    ui->nameLineEdit->setText(name);
+    ui->companyLineEdit->setText(description);
+    ui->phoneLineEdit->setText(phone);
+    ui->emailLineEdit->setText(email);
+    ui->contentPlainTextEdit->setPlainText(content);
+
+    QSqlQuery query;
+    query.exec("UPDATE contacts SET name = '" + name +
+               "', description = '" + description +
+               "', phone = '" + phone +
+               "', email = '" + email +
+               "', content = '" + content +
+               "' WHERE id = " + QString::number(currentItem->uniqueId));
+
+
+
+    Master *master = qobject_cast<Master *>(masterWidget);
+    master->updateContactList();
+}
+
 
 
 void Contact::startAnimation()
@@ -71,5 +157,13 @@ void Contact::endAnimation()
 Contact::~Contact()
 {
     delete ui;
+
+    delete fadeEffect;
+    delete animation;
+
+    delete currentItem;
 }
+
+
+
 

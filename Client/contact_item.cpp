@@ -3,6 +3,7 @@
 
 ContactItem::ContactItem(QWidget *parent,
                          int id,
+                         int uniqueId,
                          QString name,
                          QString description,
                          QString phone,
@@ -19,6 +20,8 @@ ContactItem::ContactItem(QWidget *parent,
 
 
     this->id = id;
+    this->uniqueId = uniqueId;
+
     this->name = name;
     this->description = description;
     this->phone = phone;

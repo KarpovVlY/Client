@@ -18,15 +18,19 @@ public:
     QString email;
     QString content;
 
+    int uniqueId;
+
+    int id;
 
 private:
     Ui::ContactItem *ui;
 
-    int id;
+
 
 public:
     ContactItem(QWidget *parent,
                 int id,
+                int uniqueId,
                 QString name,
                 QString description,
                 QString phone,

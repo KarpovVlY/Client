@@ -2,9 +2,30 @@
 #include "ui_new_note.h"
 
 #include "master.h"
+#include "note.h"
+
 
 NewNote::NewNote(QWidget *parent,
                  QStackedWidget *mainStackedWidget) :
+                 QWidget(parent),
+                 ui(new Ui::NewNote)
+{
+    ui->setupUi(this);
+
+    this->mainStackedWidget = mainStackedWidget;
+    this->masterWidget = parent;
+
+    ui->contentTextEdit->setPlainText("");
+
+    isNewNoteFromMaster = true;
+}
+
+
+NewNote::NewNote(QWidget *parent,
+                 QStackedWidget *mainStackedWidget,
+                 QString name,
+                 QString description,
+                 QString content):
                  QWidget(parent),
                  ui(new Ui::NewNote)
 {
@@ -14,8 +35,16 @@ NewNote::NewNote(QWidget *parent,
     this->mainStackedWidget = mainStackedWidget;
     this->masterWidget = parent;
 
+    ui->nameLineEdit->setText(name);
+    ui->commentLineEdit->setText(description);
+    ui->contentTextEdit->setPlainText(content);
 
+    ui->newNoteLabel->setText("Изменить заметку");
+
+    isNewNoteFromMaster = false;
 }
+
+
 
 
 void NewNote::on_cancelButon_clicked()
@@ -25,9 +54,20 @@ void NewNote::on_cancelButon_clicked()
     connect(animation, &QPropertyAnimation::finished,
             [=]()
             {
-                this->mainStackedWidget->setCurrentWidget(masterWidget);
-                Master *master = qobject_cast<Master *>(masterWidget);
-                master->endAnimation();
+                if(isNewNoteFromMaster)
+                {
+                    this->mainStackedWidget->setCurrentWidget(masterWidget);
+                    Master *master = qobject_cast<Master *>(masterWidget);
+                    master->endAnimation();
+                }
+                else
+                {
+                    this->mainStackedWidget->setCurrentWidget(masterWidget);
+                    Note *note = qobject_cast<Note *>(masterWidget);
+                    note->endAnimation();
+                }
+
+
                 fadeEffect->setOpacity(1);
             });
 }
@@ -40,16 +80,39 @@ void NewNote::on_confirmButton_clicked()
     connect(animation, &QPropertyAnimation::finished,
             [=]()
             {
-                this->mainStackedWidget->setCurrentWidget(masterWidget);
-                Master *master = qobject_cast<Master *>(masterWidget);
+                if(isNewNoteFromMaster)
+                {
+                    this->mainStackedWidget->setCurrentWidget(masterWidget);
+                    Master *master = qobject_cast<Master *>(masterWidget);
 
-                master->addNewNote(ui->nameLineEdit->text(),
-                                   ui->commentLineEdit->text(),
-                                   ui->contentTextEdit->toPlainText());
-                master->endAnimation();
+                    master->addNewNote(ui->nameLineEdit->text(),
+                                       ui->commentLineEdit->text(),
+                                       ui->contentTextEdit->toPlainText());
+                    master->endAnimation();
+
+                    ui->nameLineEdit->setText("");
+                    ui->commentLineEdit->setText("");
+                    ui->contentTextEdit->setPlainText("");
+                }
+                else
+                {
+                    this->mainStackedWidget->setCurrentWidget(masterWidget);
+                    Note *note = qobject_cast<Note *>(masterWidget);
+
+                    note->noteChanged(ui->nameLineEdit->text(),
+                                      ui->commentLineEdit->text(),
+                                      ui->contentTextEdit->toPlainText());
+                    note->endAnimation();
+                }
+
+
+
                 fadeEffect->setOpacity(1);
             });
 }
+
+
+
 
 
 

@@ -90,7 +90,10 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">QWidget{ border-radius:10px; background-color: rgb(30, 33, 36);} </string>
+     <string notr="true">QWidget{ border-radius:10px; background-color: rgb(30, 33, 36);} 
+
+
+</string>
     </property>
     <widget class="QLabel" name="storageLabel">
      <property name="geometry">
@@ -213,7 +216,7 @@ background-color: rgb(255, 0, 127); max-height:1px; min-height:1px;</string>
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>../../../../../Рабочий стол/ClientRes/create_white.png</normaloff>../../../../../Рабочий стол/ClientRes/create_white.png</iconset>
+      <normaloff>../../../../../Рабочий стол/ClientRes/add_white.png</normaloff>../../../../../Рабочий стол/ClientRes/add_white.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -246,38 +249,6 @@ background-color: rgb(255, 0, 127); max-height:1px; min-height:1px;</string>
     <property name="icon">
      <iconset>
       <normaloff>../../../../../Рабочий стол/ClientRes/settings_white.png</normaloff>../../../../../Рабочий стол/ClientRes/settings_white.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>30</width>
-      <height>30</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="accountButton">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>5</y>
-      <width>40</width>
-      <height>40</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 0, 127);
- border-style: solid;
- border-radius:20px;
- max-width:40px;
- max-height:40px;
- min-width:40px;
- min-height:40px;</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>../../../../../Рабочий стол/ClientRes/person_white.png</normaloff>../../../../../Рабочий стол/ClientRes/person_white.png</iconset>
     </property>
     <property name="iconSize">
      <size>
