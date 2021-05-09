@@ -53,7 +53,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 0, 127);
+     <string notr="true">background-color:  #ff006c;
  border-style: solid;
  border-radius:15px;
  max-width:30px;

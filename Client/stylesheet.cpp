@@ -6,7 +6,7 @@ QString Stylesheet::masterHeaderParentStylesheetOff = "border-radius:10px; backg
 QString Stylesheet::masterHeaderLabelStylesheetOn = "background-color: rgb(30, 33, 36); border:solid";
 QString Stylesheet::masterHeaderLabelStylesheetOff = "background-color: rgb(40, 46, 51);";
 
-QString Stylesheet::masterHeaderLineStylesheetOn = "background-color: rgb(255, 0, 127); max-height:1px; min-height:1px;";
+QString Stylesheet::masterHeaderLineStylesheetOn = "background-color: #ff006c; max-height:1px; min-height:1px;";
 QString Stylesheet::masterHeaderLineStylesheetOff = "background-color: rgb(127, 127, 127); max-height:1px; min-height:1px;";
 
 

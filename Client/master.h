@@ -1,6 +1,8 @@
 #ifndef MASTER_H
 #define MASTER_H
 
+
+
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QFormLayout>
@@ -29,6 +31,8 @@
 #include "storage.h"
 
 
+#include "client.h"
+
 namespace Ui { class Master; }
 
 class Master : public QWidget
@@ -49,7 +53,6 @@ private:
     NewStorage *newStoragePage;
     NewNote *newNotePage;
 
-
     Settings *settingsPage;
 
     QList <StorageItem *> storageItems;
@@ -57,13 +60,16 @@ private:
     QList <NoteItem *> notesItems;
 
 
+    Client *client;
+
 
 public:
     short currentId = 1;
 
 public:
     Master(QWidget *parent,
-           QStackedWidget *mainStackedWidget);
+           QStackedWidget *mainStackedWidget,
+           Client *client);
 
     ~Master();
 
@@ -121,9 +127,6 @@ private:
     void fillStoragesList();
 
     void replenishListItems();
-
-    void setColor();
-
 
 
 

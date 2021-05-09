@@ -5,6 +5,8 @@
 
 #include "stylesheet.h"
 
+#include "client.h"
+
 MasterHeaderMouseHandler *headerMouseHandlers[3];
 
 
@@ -30,13 +32,17 @@ int storageUniqueId;
 
 
 Master::Master(QWidget *parent,
-               QStackedWidget *mainStackedWidget) :
+               QStackedWidget *mainStackedWidget,
+               Client *client) :
                QWidget(parent),
                ui(new Ui::Master)
 {
     ui->setupUi(this);
 
-    setColor();
+    this->client = client;
+    this->client->connect();
+
+
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("/home/vladislav/Work/Projects/VKR/ClientDataBase/ClientDB.db");
@@ -84,20 +90,6 @@ Master::Master(QWidget *parent,
     loadStoragesData();
 
     fillStoragesList();
-}
-
-
-void Master::setColor()
-{
-    /*ui->categoryWidget->setStyleSheet(Stylesheet::whiteHeaderStylesheet);
-    ui->toolsWidget->setStyleSheet(Stylesheet::whiteHeaderStylesheet);
-    ui->settingsButton->setStyleSheet(Stylesheet::whiteButtonStylesheet);
-    ui->newButton->setStyleSheet(Stylesheet::whiteButtonStylesheet);
-
-
-    ui->notesLabel->setStyleSheet(Stylesheet::whiteMasterHeaderLabelStylesheetOn);
-*/
-
 }
 
 
@@ -159,6 +151,8 @@ void Master::addNewNote(QString name,
     notesScrollWidgetLayout->addWidget(item);
 
     ++noteUniqueId;
+
+    client->sendMesage("MC_NEW_NOTE");
 }
 
 
@@ -203,6 +197,8 @@ void Master::deleteNoteItem(int id)
 {
     notesItems.removeAt(id);
     updateNoteList();
+
+    client->sendMesage("MC_DROP_NOTE");
 }
 
 
@@ -268,6 +264,8 @@ void Master::addNewContact(QString name,
     contactsScrollWidgetLayout->addWidget(item);
 
     ++contactUniqueId;
+
+    client->sendMesage("MC_NEW_CONTACT");
 }
 
 
@@ -312,6 +310,8 @@ void Master::deleteContactItem(int id)
 {
     contactsItems.removeAt(id);
     updateContactList();
+
+    client->sendMesage("MC_DROP_CONTACT");
 }
 
 
@@ -381,6 +381,8 @@ void Master::addNewStorage(QString name,
     storageScrollWidgetLayout->addWidget(item);
 
     ++storageUniqueId;
+
+    client->sendMesage("MC_NEW_STORAGE");
 }
 
 
@@ -425,6 +427,8 @@ void Master::deleteStorageItem(int id)
 {
     storageItems.removeAt(id);
     updateStorageList();
+
+    client->sendMesage("MC_DROP_STORAGE");
 }
 
 
@@ -549,6 +553,8 @@ void Master::on_newButton_clicked()
 ///Settings button listener
 void Master::on_settingsButton_clicked()
 {
+    this->client->sendMesage(Stylesheet::scrollAreaStylesheet);
+
     startAnimation();
 
     connect(animation, &QPropertyAnimation::finished,

@@ -203,7 +203,7 @@ background-color: rgb(255, 0, 127); max-height:1px; min-height:1px;</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 0, 127);
+     <string notr="true">background-color: #ff006c;
  border-style: solid;
  border-radius:20px;
  max-width:40px;
@@ -235,7 +235,7 @@ background-color: rgb(255, 0, 127); max-height:1px; min-height:1px;</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 0, 127);
+     <string notr="true">background-color: #ff006c;
  border-style: solid;
  border-radius:20px;
  max-width:40px;

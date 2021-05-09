@@ -10,7 +10,9 @@ MainWindow::MainWindow(QWidget *parent):
     ui->setupUi(this);
 
 
-    masterPage = new Master(this, ui->mainStackedWidget);
+    this->client = new Client();
+
+    masterPage = new Master(this, ui->mainStackedWidget, client);
 
 
 
@@ -18,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent):
     ui->mainStackedWidget->addWidget(masterPage);
     ui->mainStackedWidget->setCurrentWidget(masterPage);
 }
+
+
 
 
 MainWindow::~MainWindow()
@@ -31,6 +35,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_exitButton_clicked()
 {
+
+    client->stop();
 
     QCoreApplication::quit();
 }

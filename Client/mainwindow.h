@@ -5,7 +5,7 @@
 #include "signup.h"
 #include "master.h"
 
-
+#include "client.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -26,6 +26,7 @@ private:
     NewContact *newContactPage;
 
 
+    Client *client;
 
 public:
     MainWindow(QWidget *parent = nullptr);
