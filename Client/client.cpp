@@ -1,25 +1,25 @@
 #include "client.h"
 
+
 Client::Client()
 {
-
-    clientSocket = new QTcpSocket();
-
-
-
-    qDebug() << "Created";
-}
-
-
-
-void Client::connect()
-{
+    clientSocket = new QTcpSocket(this);
     clientSocket->connectToHost("localhost", 2160);
 
     qDebug() << "Connected";
-
 }
 
+
+QString Client::receiveMessage()
+{
+    clientSocket->waitForReadyRead(-1);
+
+    QString data;
+    if(clientSocket->bytesAvailable() > 0)
+        data = clientSocket->readAll();
+
+    return data;
+}
 
 
 void Client::sendMesage(QString message)
@@ -36,3 +36,4 @@ void Client::stop()
     clientSocket->waitForBytesWritten(3000);
     clientSocket->disconnectFromHost();
 }
+

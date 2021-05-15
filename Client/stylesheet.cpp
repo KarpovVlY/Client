@@ -28,6 +28,4 @@ QString Stylesheet::scrollAreaStylesheet = "QScrollBar:vertical { background-col
                                "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical { background: none; }";
 
 
-
-
 Stylesheet::Stylesheet(){ }

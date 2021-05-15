@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Login</class>
+ <widget class="QWidget" name="Login">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>420</width>
+    <height>580</height>
+   </rect>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::StrongFocus</enum>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="categoryWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>420</width>
+     <height>45</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(40, 46, 51);</string>
+   </property>
+   <widget class="QLabel" name="loginLabel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>5</y>
+      <width>81</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Вход</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QLineEdit" name="loginLineEdit">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>90</y>
+     <width>324</width>
+     <height>34</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::StrongFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit {
+	border: 2px solid rgb(37, 39, 48); 
+	color:  #FFF; 
+	border-radius: 15px; 
+	padding-left: 20px;
+	padding-right: 20px; 
+	background-color: rgb(35, 38, 41); 
+	selection-background-color: rgb(43,45,56);  
+	max-width:280px; 
+	max-height:30px;
+	min-width:280px; 
+	min-height:30px;
+}
+ 
+QLineEdit:hover{
+	border: 2px solid rgb(27, 28, 35);
+} 
+                            
+QLineEdit:focus{
+	border: 2px solid rgb(27, 28, 35); 
+	background-color: rgb(30, 33, 36); 
+}
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="placeholderText">
+    <string>Логин</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="passwordLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>140</y>
+     <width>324</width>
+     <height>34</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::StrongFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit {
+	border: 2px solid rgb(37, 39, 48); 
+	color:  #FFF; 
+	border-radius: 15px; 
+	padding-left: 20px;
+	padding-right: 20px; 
+	background-color: rgb(35, 38, 41); 
+	selection-background-color: rgb(43,45,56);  
+	max-width:280px; 
+	max-height:30px;
+	min-width:280px; 
+	min-height:30px;
+}
+ 
+QLineEdit:hover{
+	border: 2px solid rgb(27, 28, 35);
+} 
+                            
+QLineEdit:focus{
+	border: 2px solid rgb(27, 28, 35); 
+	background-color: rgb(30, 33, 36); 
+}
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="placeholderText">
+    <string>Пароль</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="signupButton">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>520</y>
+     <width>170</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #ff006c;
+ border-style: solid;
+ border-radius:10px;
+ max-width:170px;
+ max-height:30px;
+ min-width:170px;
+ min-height:30px;</string>
+   </property>
+   <property name="text">
+    <string>Регистрация</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>30</width>
+     <height>30</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="loginButton">
+   <property name="geometry">
+    <rect>
+     <x>45</x>
+     <y>240</y>
+     <width>100</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+     <strikeout>false</strikeout>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #ff006c;
+ border-style: solid;
+ border-radius:10px;
+ max-width:100px;
+ max-height:30px;
+ min-width:100px;
+ min-height:30px;</string>
+   </property>
+   <property name="text">
+    <string>Вход</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>30</width>
+     <height>30</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QWidget" name="titleHint_2" native="true">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>390</y>
+     <width>400</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <widget class="Line" name="line_5">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>10</y>
+      <width>240</width>
+      <height>1</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_6">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>10</y>
+      <width>15</width>
+      <height>1</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>0</y>
+      <width>141</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>8</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Создайте учетную запись</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>410</y>
+     <width>271</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Необходимо наличие подключения к интернету</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>425</y>
+     <width>271</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>и доступ к электронной почте</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="errorLabel">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>60</y>
+     <width>271</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(185, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string>Ошибка, проверьте правильность ввода</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="checkedRadioButton">
+   <property name="geometry">
+    <rect>
+     <x>45</x>
+     <y>190</y>
+     <width>151</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QRadioButton::indicator
+ {
+    width:                  12px;
+    height:                 12px;
+    border-radius:          7px;
+}
+
+QRadioButton::indicator:checked 
+{
+    background-color: #ff006c;
+
+
+ border: 2px solid #ff006c ;
+}
+
+QRadioButton::indicator:unchecked
+ {
+   background-color: rgb(35, 38, 41);
+    border: 2px solid rgb(37, 39, 48) ;
+}</string>
+   </property>
+   <property name="text">
+    <string>Запомнить аккаунт</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

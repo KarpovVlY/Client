@@ -1,15 +1,18 @@
-#include "signup.h"
-#include "ui_signup.h"
-
 #include "login.h"
+#include "ui_login.h"
+
+
 #include "mainwindow.h"
 
-SignUp::SignUp(QWidget *parent,
-               QStackedWidget *mainStackedWidget,
-               Client *client,
-               cryptopp *crypto) :
-               QWidget(parent),
-               ui(new Ui::SignUp)
+
+bool checked;
+
+Login::Login(QWidget *parent,
+             QStackedWidget *mainStackedWidget,
+             Client *client,
+             cryptopp *crypto) :
+             QWidget(parent),
+             ui(new Ui::Login)
 {
     ui->setupUi(this);
 
@@ -20,60 +23,29 @@ SignUp::SignUp(QWidget *parent,
     this->masterWidget = parent;
 
     ui->errorLabel->setVisible(false);
-
 }
 
 
 
-void SignUp::changePageToLogin()
+void Login::on_loginButton_clicked()
 {
-    MainWindow *master = qobject_cast<MainWindow *>(masterWidget);
-    master->changePageToLogin();
-}
-
-
-void SignUp::on_cancelButon_clicked()
-{
-    startAnimation();
-
-    connect(animation, &QPropertyAnimation::finished,
-            [=]()
-            {
-                this->mainStackedWidget->setCurrentWidget(masterWidget);
-                Login *master = qobject_cast<Login *>(masterWidget);
-                master->endAnimation();
-
-                fadeEffect->setOpacity(1);
-            });
-
-}
-
-void SignUp::on_confirmButton_clicked()
-{
-
-    client->sendMesage("MC_REGISTER:" +
-                       crypto->encrypt(ui->nameLineEdit->text()) + ':' +
-                       crypto->encrypt(ui->surnameLineEdit->text()) + ':' +
+    client->sendMesage("MC_LOGIN:"  +
                        crypto->encrypt(ui->loginLineEdit->text()) + ':' +
-                       ui->emailLineEdit->text() + ':' +
-                       crypto->encrypt(ui->passwordLineEdit->text()) + ':' +
-                       crypto->encrypt(ui->repeatLineEdit->text()));
+                       crypto->encrypt(ui->passwordLineEdit->text()));
 
 
-
-    if(client->receiveMessage() != "MS_INTERMEDIATE_REGISTERED")
+    if(client->receiveMessage() != "MS_SUCCESS_LOGGED")
     {
         ui->errorLabel->setVisible(true);
     }
     else
     {
-
         confirmationPage = new Confirmation(this,
                                             mainStackedWidget,
                                             masterWidget,
                                             client,
                                             crypto,
-                                            false);
+                                            true);
         mainStackedWidget->addWidget(confirmationPage);
 
         startAnimation();
@@ -82,6 +54,9 @@ void SignUp::on_confirmButton_clicked()
                 [=]()
                 {
                     mainStackedWidget->setCurrentWidget(confirmationPage);
+            /*
+                    MainWindow *master = qobject_cast<MainWindow *>(masterWidget);
+                    master->changePageToMaster();*/
 
                     confirmationPage->endAnimation();
 
@@ -91,7 +66,32 @@ void SignUp::on_confirmButton_clicked()
 }
 
 
-void SignUp::startAnimation()
+void Login::on_signupButton_clicked()
+{
+    signUpPage = new SignUp(this, mainStackedWidget, client, crypto);
+    mainStackedWidget->addWidget(signUpPage);
+
+    startAnimation();
+
+    connect(animation, &QPropertyAnimation::finished,
+            [=]()
+            {
+                mainStackedWidget->setCurrentWidget(signUpPage);
+
+                signUpPage->endAnimation();
+
+                fadeEffect->setOpacity(1);
+            });
+}
+
+
+void Login::on_radioButton_clicked()
+{
+    checked = ui->checkedRadioButton->isChecked();
+}
+
+
+void Login::startAnimation()
 {
     fadeEffect = new QGraphicsOpacityEffect(this);
     animation = new QPropertyAnimation(fadeEffect, "opacity");
@@ -104,7 +104,7 @@ void SignUp::startAnimation()
 }
 
 
-void SignUp::endAnimation()
+void Login::endAnimation()
 {
     fadeEffect = new QGraphicsOpacityEffect(this);
     animation = new QPropertyAnimation(fadeEffect, "opacity");
@@ -116,7 +116,9 @@ void SignUp::endAnimation()
     animation->start(QPropertyAnimation::DeleteWhenStopped);
 }
 
-SignUp::~SignUp()
+
+Login::~Login()
 {
     delete ui;
 }
+

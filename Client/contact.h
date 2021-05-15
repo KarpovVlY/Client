@@ -7,6 +7,9 @@
 
 #include "contact_item.h"
 
+#include "client.h"
+#include "cryptopp.h"
+
 namespace Ui { class Contact; }
 
 class Contact : public QWidget
@@ -28,11 +31,16 @@ private:
 
     ContactItem *currentItem;
 
+    Client *client;
+    cryptopp *crypt;
+
 
 public:
     Contact(QWidget *parent,
          QStackedWidget *mainStackedWidget,
-         ContactItem *item);
+         ContactItem *item,
+            Client *client,
+            cryptopp *crypt);
 
     ~Contact();
 

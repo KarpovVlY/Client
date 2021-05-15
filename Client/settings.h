@@ -37,9 +37,7 @@ public:
 
 private slots:
     void on_cancelButon_clicked();
-
-    void on_whiteRadioButton_clicked();
-    void on_blackRadioButton_clicked();
+    void on_exitButton_clicked();
 
 private:
 

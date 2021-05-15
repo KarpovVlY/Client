@@ -7,6 +7,8 @@
 
 #include "note_item.h"
 
+#include "client.h"
+#include "cryptopp.h"
 
 
 namespace Ui { class Note; }
@@ -29,12 +31,16 @@ private:
 
 
     NoteItem *currentItem;
+    Client *client;
+    cryptopp *crypt;
 
 
 public:
     Note(QWidget *parent,
          QStackedWidget *mainStackedWidget,
-         NoteItem *item);
+         NoteItem *item,
+         Client *client,
+         cryptopp *crypt);
 
     ~Note();
 

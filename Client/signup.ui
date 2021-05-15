@@ -16,41 +16,138 @@
   <property name="styleSheet">
    <string notr="true"/>
   </property>
-  <widget class="QWidget" name="widget" native="true">
+  <widget class="QLineEdit" name="nameLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>70</y>
+     <width>324</width>
+     <height>34</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit {
+	border: 2px solid rgb(37, 39, 48); 
+	color:  #FFF; 
+	border-radius: 15px; 
+	padding-left: 20px;
+	padding-right: 20px; 
+	background-color: rgb(35, 38, 41); 
+	selection-background-color: rgb(43,45,56);  
+	max-width:280px; 
+	max-height:30px;
+	min-width:280px; 
+	min-height:30px;
+}
+ 
+QLineEdit:hover{
+	border: 2px solid rgb(27, 28, 35);
+} 
+                            
+QLineEdit:focus{
+	border: 2px solid rgb(27, 28, 35); 
+	background-color: rgb(30, 33, 36); 
+}
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="placeholderText">
+    <string>Имя</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="surnameLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>120</y>
+     <width>324</width>
+     <height>34</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit {
+	border: 2px solid rgb(37, 39, 48); 
+	color:  #FFF; 
+	border-radius: 15px; 
+	padding-left: 20px;
+	padding-right: 20px; 
+	background-color: rgb(35, 38, 41); 
+	selection-background-color: rgb(43,45,56);  
+	max-width:280px; 
+	max-height:30px;
+	min-width:280px; 
+	min-height:30px;
+}
+ 
+QLineEdit:hover{
+	border: 2px solid rgb(27, 28, 35);
+} 
+                            
+QLineEdit:focus{
+	border: 2px solid rgb(27, 28, 35); 
+	background-color: rgb(30, 33, 36); 
+}
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="placeholderText">
+    <string>Фамилия</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="categoryWidget" native="true">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>420</width>
-     <height>30</height>
+     <height>45</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(49, 54, 59);</string>
+    <string notr="true">background-color: rgb(40, 46, 51);</string>
    </property>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="cancelButon">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
+      <x>7</x>
+      <y>7</y>
       <width>30</width>
       <height>30</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:  #ff006c;
+ border-style: solid;
+ border-radius:15px;
+ max-width:30px;
+ max-height:30px;
+ min-width:30px;
+ min-height:30px;</string>
     </property>
     <property name="text">
      <string/>
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>../../../../../Рабочий стол/ClientRes/arrow_left_white.png</normaloff>../../../../../Рабочий стол/ClientRes/arrow_left_white.png</iconset>
+      <normaloff>../../../../../Рабочий стол/ClientRes/arrow_white.png</normaloff>../../../../../Рабочий стол/ClientRes/arrow_white.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>25</width>
+      <height>25</height>
+     </size>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="signupLabel">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>0</y>
-      <width>131</width>
+      <x>50</x>
+      <y>5</y>
+      <width>141</width>
       <height>30</height>
      </rect>
     </property>
@@ -63,6 +160,221 @@
      <string>Регистрация</string>
     </property>
    </widget>
+  </widget>
+  <widget class="QLineEdit" name="loginLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>210</y>
+     <width>324</width>
+     <height>34</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit {
+	border: 2px solid rgb(37, 39, 48); 
+	color:  #FFF; 
+	border-radius: 15px; 
+	padding-left: 20px;
+	padding-right: 20px; 
+	background-color: rgb(35, 38, 41); 
+	selection-background-color: rgb(43,45,56);  
+	max-width:280px; 
+	max-height:30px;
+	min-width:280px; 
+	min-height:30px;
+}
+ 
+QLineEdit:hover{
+	border: 2px solid rgb(27, 28, 35);
+} 
+                            
+QLineEdit:focus{
+	border: 2px solid rgb(27, 28, 35); 
+	background-color: rgb(30, 33, 36); 
+}
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="placeholderText">
+    <string>Логин</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="emailLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>260</y>
+     <width>324</width>
+     <height>34</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit {
+	border: 2px solid rgb(37, 39, 48); 
+	color:  #FFF; 
+	border-radius: 15px; 
+	padding-left: 20px;
+	padding-right: 20px; 
+	background-color: rgb(35, 38, 41); 
+	selection-background-color: rgb(43,45,56);  
+	max-width:280px; 
+	max-height:30px;
+	min-width:280px; 
+	min-height:30px;
+}
+ 
+QLineEdit:hover{
+	border: 2px solid rgb(27, 28, 35);
+} 
+                            
+QLineEdit:focus{
+	border: 2px solid rgb(27, 28, 35); 
+	background-color: rgb(30, 33, 36); 
+}
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="placeholderText">
+    <string>Email</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="passwordLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>330</y>
+     <width>324</width>
+     <height>34</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit {
+	border: 2px solid rgb(37, 39, 48); 
+	color:  #FFF; 
+	border-radius: 15px; 
+	padding-left: 20px;
+	padding-right: 20px; 
+	background-color: rgb(35, 38, 41); 
+	selection-background-color: rgb(43,45,56);  
+	max-width:280px; 
+	max-height:30px;
+	min-width:280px; 
+	min-height:30px;
+}
+ 
+QLineEdit:hover{
+	border: 2px solid rgb(27, 28, 35);
+} 
+                            
+QLineEdit:focus{
+	border: 2px solid rgb(27, 28, 35); 
+	background-color: rgb(30, 33, 36); 
+}
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="placeholderText">
+    <string>Пароль</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="repeatLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>380</y>
+     <width>324</width>
+     <height>34</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit {
+	border: 2px solid rgb(37, 39, 48); 
+	color:  #FFF; 
+	border-radius: 15px; 
+	padding-left: 20px;
+	padding-right: 20px; 
+	background-color: rgb(35, 38, 41); 
+	selection-background-color: rgb(43,45,56);  
+	max-width:280px; 
+	max-height:30px;
+	min-width:280px; 
+	min-height:30px;
+}
+ 
+QLineEdit:hover{
+	border: 2px solid rgb(27, 28, 35);
+} 
+                            
+QLineEdit:focus{
+	border: 2px solid rgb(27, 28, 35); 
+	background-color: rgb(30, 33, 36); 
+}
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="placeholderText">
+    <string>Повторите пароль</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="confirmButton">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>520</y>
+     <width>40</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #ff006c;
+ border-style: solid;
+ border-radius:20px;
+ max-width:40px;
+ max-height:40px;
+ min-width:40px;
+ min-height:40px;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../../../../../Рабочий стол/ClientRes/done_white.png</normaloff>../../../../../Рабочий стол/ClientRes/done_white.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>30</width>
+     <height>30</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QLabel" name="errorLabel">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>170</y>
+     <width>291</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(185, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string>Ошибка, такой Логин уже зарегистрирован</string>
+   </property>
   </widget>
  </widget>
  <resources/>

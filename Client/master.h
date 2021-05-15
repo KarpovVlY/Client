@@ -6,9 +6,9 @@
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QFormLayout>
-
 #include <QScrollArea>
 #include <QStackedWidget>
+
 #include <QGraphicsOpacityEffect>
 
 #include <QSqlDatabase>
@@ -30,8 +30,10 @@
 #include "contact.h"
 #include "storage.h"
 
-
+#include "aes.h"
 #include "client.h"
+
+#include "cryptopp.h"
 
 namespace Ui { class Master; }
 
@@ -61,6 +63,7 @@ private:
 
 
     Client *client;
+    cryptopp *crypto;
 
 
 public:
@@ -69,7 +72,8 @@ public:
 public:
     Master(QWidget *parent,
            QStackedWidget *mainStackedWidget,
-           Client *client);
+           Client *client,
+           cryptopp *crypto);
 
     ~Master();
 
@@ -136,6 +140,8 @@ public slots:
 private slots:
     void on_newButton_clicked();
     void on_settingsButton_clicked();
+
+
 };
 
 #endif

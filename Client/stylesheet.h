@@ -3,16 +3,10 @@
 
 #include <QString>
 
-#include <QGraphicsOpacityEffect>
-#include <QPropertyAnimation>
-
 
 class Stylesheet
 {
 public:
-
-
-    static QString databasePath;
 
     ///Master header stylesheets
     static QString masterHeaderParentStylesheetOn;

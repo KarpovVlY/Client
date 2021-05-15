@@ -5,6 +5,10 @@
 #include <QStackedWidget>
 #include <QGraphicsOpacityEffect>
 
+#include "cryptopp.h"
+
+
+#include "client.h"
 #include "storage_item.h"
 
 namespace Ui { class Storage; }
@@ -26,12 +30,16 @@ private:
     QPropertyAnimation *animation;
 
     StorageItem *currentItem;
+    Client *client;
+    cryptopp *crypt;
 
 
 public:
     Storage(QWidget *parent,
          QStackedWidget *mainStackedWidget,
-         StorageItem *item);
+         StorageItem *item,
+         Client *client,
+         cryptopp *crypt);
 
     ~Storage();
 

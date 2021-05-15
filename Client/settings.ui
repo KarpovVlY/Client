@@ -40,7 +40,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Настройки</string>
+     <string>Аккаунт</string>
     </property>
    </widget>
    <widget class="QPushButton" name="cancelButon">
@@ -76,50 +76,21 @@
     </property>
    </widget>
   </widget>
-  <widget class="QRadioButton" name="blackRadioButton">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>310</y>
-     <width>105</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Темная</string>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QRadioButton" name="whiteRadioButton">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>340</y>
-     <width>105</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Светлая</string>
-   </property>
-  </widget>
   <widget class="QWidget" name="titleHint_1" native="true">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>280</y>
-     <width>400</width>
+     <y>50</y>
+     <width>401</width>
      <height>16</height>
     </rect>
    </property>
    <widget class="Line" name="line">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>45</x>
       <y>10</y>
-      <width>290</width>
+      <width>350</width>
       <height>1</height>
      </rect>
     </property>
@@ -145,7 +116,7 @@
      <rect>
       <x>20</x>
       <y>0</y>
-      <width>91</width>
+      <width>31</width>
       <height>18</height>
      </rect>
     </property>
@@ -155,9 +126,315 @@
      </font>
     </property>
     <property name="text">
-     <string>Цветовая схема</string>
+     <string>Имя</string>
     </property>
    </widget>
+  </widget>
+  <widget class="QWidget" name="titleHint_2" native="true">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>140</y>
+     <width>401</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <widget class="Line" name="line_3">
+    <property name="geometry">
+     <rect>
+      <x>75</x>
+      <y>10</y>
+      <width>320</width>
+      <height>1</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_4">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>10</y>
+      <width>15</width>
+      <height>1</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>0</y>
+      <width>51</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>8</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Фамилия</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QLineEdit" name="nameLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>70</y>
+     <width>400</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-style: solid;
+border-radius: 10px; 
+
+color:  #FFF; 
+background-color: rgb(35, 38, 41); 
+selection-background-color: rgb(43,45,56);  
+
+
+padding-left: 10px;
+padding-right: 10px; 
+padding-top:5px;
+padding-bottom:5px;</string>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="surnameLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>160</y>
+     <width>400</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-style: solid;
+border-radius: 10px; 
+
+color:  #FFF; 
+background-color: rgb(35, 38, 41); 
+selection-background-color: rgb(43,45,56);  
+
+
+padding-left: 10px;
+padding-right: 10px; 
+padding-top:5px;
+padding-bottom:5px;</string>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="loginLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>250</y>
+     <width>400</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-style: solid;
+border-radius: 10px; 
+
+color:  #FFF; 
+background-color: rgb(35, 38, 41); 
+selection-background-color: rgb(43,45,56);  
+
+
+padding-left: 10px;
+padding-right: 10px; 
+padding-top:5px;
+padding-bottom:5px;</string>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QWidget" name="titleHint_3" native="true">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>230</y>
+     <width>401</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <widget class="Line" name="line_5">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>10</y>
+      <width>335</width>
+      <height>1</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_6">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>10</y>
+      <width>15</width>
+      <height>1</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>0</y>
+      <width>51</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>8</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Логин</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QLineEdit" name="emailLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>350</y>
+     <width>400</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-style: solid;
+border-radius: 10px; 
+
+color:  #FFF; 
+background-color: rgb(35, 38, 41); 
+selection-background-color: rgb(43,45,56);  
+
+
+padding-left: 10px;
+padding-right: 10px; 
+padding-top:5px;
+padding-bottom:5px;</string>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QWidget" name="titleHint_4" native="true">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>330</y>
+     <width>401</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <widget class="Line" name="line_7">
+    <property name="geometry">
+     <rect>
+      <x>55</x>
+      <y>10</y>
+      <width>340</width>
+      <height>1</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_8">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>10</y>
+      <width>15</width>
+      <height>1</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>0</y>
+      <width>51</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>8</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Email</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="exitButton">
+   <property name="geometry">
+    <rect>
+     <x>15</x>
+     <y>530</y>
+     <width>200</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+     <strikeout>false</strikeout>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #ff006c;
+ border-style: solid;
+ border-radius:10px;
+ max-width:200px;
+ max-height:30px;
+ min-width:200px;
+ min-height:30px;</string>
+   </property>
+   <property name="text">
+    <string>Выйти из аккаунта</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>30</width>
+     <height>30</height>
+    </size>
+   </property>
   </widget>
  </widget>
  <resources/>

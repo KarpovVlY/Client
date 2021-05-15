@@ -1,11 +1,12 @@
 #include "master.h"
 #include "ui_master.h"
 
+#include "stylesheet.h"
+#include "client.h"
+
+
 #include <QDebug>
 
-#include "stylesheet.h"
-
-#include "client.h"
 
 MasterHeaderMouseHandler *headerMouseHandlers[3];
 
@@ -31,22 +32,18 @@ int contactUniqueId;
 int storageUniqueId;
 
 
+
 Master::Master(QWidget *parent,
                QStackedWidget *mainStackedWidget,
-               Client *client) :
+               Client *client,
+               cryptopp *crypto) :
                QWidget(parent),
                ui(new Ui::Master)
 {
     ui->setupUi(this);
 
     this->client = client;
-    this->client->connect();
-
-
-
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("/home/vladislav/Work/Projects/VKR/ClientDataBase/ClientDB.db");
-    db.open();
+    this->crypto = crypto;
 
 
     this->mainStackedWidget = mainStackedWidget;
@@ -108,9 +105,9 @@ void Master::loadNotesData()
     {
         NoteItem *item = new NoteItem(nullptr, count,
                                       query.value(0).toInt(),
-                                      query.value(1).toString(),
-                                      query.value(2).toString(),
-                                      query.value(3).toString());
+                                      crypto->decrypt(query.value(1).toString()),
+                                      crypto->decrypt(query.value(2).toString()),
+                                      crypto->decrypt(query.value(3).toString()));
 
         item->setMaster(this);
         item->setFixedSize(QSize(370, 50));
@@ -129,14 +126,27 @@ void Master::loadNotesData()
 }
 
 
+
+
+
+
 void Master::addNewNote(QString name,
                         QString description,
                         QString content)
 {
+
+    QString crypted[3];
+
+    crypted[0] = crypto->encrypt(name);
+    crypted[1] = crypto->encrypt(description);
+    crypted[2] = crypto->encrypt(content);
+
     QSqlQuery query;
     query.exec("INSERT INTO notes (id, name, description, content) VALUES ('" +
-                QString::number(noteUniqueId) + "','" + name +
-                "','" + description + "','" + content + "')");
+               QString::number(noteUniqueId) +
+               "','" + crypted[0] +
+               "','" + crypted[1] +
+               "','" + crypted[2] + "')");
 
 
     NoteItem *item = new NoteItem(nullptr, notesItems.size(),
@@ -152,7 +162,10 @@ void Master::addNewNote(QString name,
 
     ++noteUniqueId;
 
-    client->sendMesage("MC_NEW_NOTE");
+    client->sendMesage("MC_NEW_NOTE:" +
+                       crypted[0] + ':' +
+                       crypted[1] + ':' +
+                       crypted[2]);
 }
 
 
@@ -182,11 +195,23 @@ void Master::initiateNotesList()
     ui->stackedWidget->addWidget(notesScrollArea);
 }
 
+QString scrollAreaStylesheet = "QScrollBar:vertical { background-color: #2A2929;  width: 12px; margin: 15px 3px 15px 3px; border: 1px transparent #2A2929; border-radius: 3px; }"
+                               "QScrollBar::handle:vertical { background-color:  rgb(255, 0, 127); min-height: 5px; border-radius: 3px; }"
+                               "QScrollBar::sub-line:vertical { margin: 3px 0px 3px 0px; border-image: url(:/images/up_arrow_disabled.png); height: 10px; width: 10px; subcontrol-position: top; subcontrol-origin: margin; }"
+                               "QScrollBar::add-line:vertical { margin: 3px 0px 3px 0px; border-image: url(:/images/down_arrow_disabled.png); height: 10px; width: 10px; subcontrol-position: bottom; subcontrol-origin: margin; }"
+                               "QScrollBar::sub-line:vertical:hover,QScrollBar::sub-line:vertical:on { border-image: url(:/images/up_arrow.png); height: 10px; width: 10px; subcontrol-position: top; subcontrol-origin: margin; }"
+                               "QScrollBar::add-line:vertical:hover, QScrollBar::add-line:vertical:on { border-image: url(:/images/down_arrow.png); height: 10px; width: 10px; subcontrol-position: bottom; subcontrol-origin: margin; }"
+                               "QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical { background: none; }"
+                               "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical { background: none; }";
+
+
 
 void Master::fillNotesList()
 {
     ui->stackedWidget->setCurrentWidget(notesScrollArea);
-    notesScrollArea->setStyleSheet(Stylesheet::scrollAreaStylesheet);
+
+
+    notesScrollArea->setStyleSheet(scrollAreaStylesheet);
 
     for(int i = 0 ; i < notesItems.length() ; i ++)
         notesScrollWidgetLayout->addWidget(notesItems[i]);
@@ -197,8 +222,6 @@ void Master::deleteNoteItem(int id)
 {
     notesItems.removeAt(id);
     updateNoteList();
-
-    client->sendMesage("MC_DROP_NOTE");
 }
 
 
@@ -217,11 +240,11 @@ void Master::loadContactsData()
     {
         ContactItem *item = new ContactItem(nullptr, count,
                                       query.value(0).toInt(),
-                                      query.value(1).toString(),
-                                      query.value(2).toString(),
-                                      query.value(3).toString(),
-                                      query.value(4).toString(),
-                                      query.value(5).toString());
+                                      crypto->decrypt(query.value(1).toString()),
+                                      crypto->decrypt(query.value(2).toString()),
+                                      crypto->decrypt(query.value(3).toString()),
+                                      crypto->decrypt(query.value(4).toString()),
+                                      crypto->decrypt(query.value(5).toString()));
 
         item->setMaster(this);
         item->setFixedSize(QSize(370, 50));
@@ -246,10 +269,24 @@ void Master::addNewContact(QString name,
                            QString email,
                            QString content)
 {
+
+    QString crypted[5];
+
+    crypted[0] = crypto->encrypt(name);
+    crypted[1] = crypto->encrypt(description);
+    crypted[2] = crypto->encrypt(phone);
+    crypted[3] = crypto->encrypt(email);
+    crypted[4] = crypto->encrypt(content);
+
+
     QSqlQuery query;
     query.exec("INSERT INTO contacts (id, name, description, phone, email, content) VALUES ('" +
-                QString::number(contactUniqueId) + "','" + name + "','" + description + "','" +
-                phone + "','" + email + "','" + content + "')");
+                QString::number(contactUniqueId) +
+                "','" + crypted[0] +
+                "','" + crypted[1] +
+                "','" + crypted[2] +
+                "','" + crypted[3] +
+                "','" + crypted[4] + "')");
 
 
     ContactItem *item = new ContactItem(nullptr, contactsItems.size(),
@@ -265,7 +302,14 @@ void Master::addNewContact(QString name,
 
     ++contactUniqueId;
 
-    client->sendMesage("MC_NEW_CONTACT");
+    client->sendMesage("MC_NEW_CONTACT:" +
+                       crypted[0] + ':' +
+                       crypted[1] + ':' +
+                       crypted[2] + ':' +
+                       crypted[3] + ':' +
+                       crypted[4]);
+
+
 }
 
 
@@ -310,8 +354,6 @@ void Master::deleteContactItem(int id)
 {
     contactsItems.removeAt(id);
     updateContactList();
-
-    client->sendMesage("MC_DROP_CONTACT");
 }
 
 
@@ -331,12 +373,12 @@ void Master::loadStoragesData()
     {
         StorageItem *item = new StorageItem(nullptr, count,
                                       query.value(0).toInt(),
-                                      query.value(1).toString(),
-                                      query.value(2).toString(),
-                                      query.value(3).toString(),
-                                      query.value(4).toString(),
-                                      query.value(5).toString(),
-                                      query.value(6).toString());
+                                      crypto->decrypt(query.value(1).toString()),
+                                      crypto->decrypt(query.value(2).toString()),
+                                      crypto->decrypt(query.value(3).toString()),
+                                      crypto->decrypt(query.value(4).toString()),
+                                      crypto->decrypt(query.value(5).toString()),
+                                      crypto->decrypt(query.value(6).toString()));
 
         item->setMaster(this);
         item->setFixedSize(QSize(370, 50));
@@ -362,11 +404,26 @@ void Master::addNewStorage(QString name,
                            QString info,
                            QString content)
 {
+
+    QString crypted[6];
+
+    crypted[0] = crypto->encrypt(name);
+    crypted[1] = crypto->encrypt(description);
+    crypted[2] = crypto->encrypt(login);
+    crypted[3] = crypto->encrypt(password);
+    crypted[4] = crypto->encrypt(info);
+    crypted[5] = crypto->encrypt(content);
+
+
     QSqlQuery query;
     query.exec("INSERT INTO storages (id, name, description, login, password, info, content) VALUES ('" +
-                QString::number(storageUniqueId) + "','" + name + "','" +
-                description + "','" + login + "','" + password + "','" +
-                info + "','" + content + "')");
+                QString::number(storageUniqueId) +
+                "','" + crypted[0] +
+                "','" + crypted[1] +
+                "','" + crypted[2] +
+                "','" + crypted[3] +
+                "','" + crypted[4] +
+                "','" + crypted[5] + "')");
 
 
     StorageItem *item = new StorageItem(nullptr, storageItems.size(),
@@ -382,7 +439,13 @@ void Master::addNewStorage(QString name,
 
     ++storageUniqueId;
 
-    client->sendMesage("MC_NEW_STORAGE");
+    client->sendMesage("MC_NEW_STORAGE:" +
+                       crypted[0] + ':' +
+                       crypted[1] + ':' +
+                       crypted[2] + ':' +
+                       crypted[3] + ':' +
+                       crypted[4] + ':' +
+                       crypted[5]);
 }
 
 
@@ -427,8 +490,6 @@ void Master::deleteStorageItem(int id)
 {
     storageItems.removeAt(id);
     updateStorageList();
-
-    client->sendMesage("MC_DROP_STORAGE");
 }
 
 
@@ -470,7 +531,11 @@ void Master::itemSelected(int id,
 {
     if(type == 0)
     {
-        Contact *contact = new Contact(this, mainStackedWidget, contactsItems[id]);
+        Contact *contact = new Contact(this,
+                                       mainStackedWidget,
+                                       contactsItems[id],
+                                       client,
+                                       crypto);
         this->mainStackedWidget->addWidget(contact);
 
         startAnimation();
@@ -487,7 +552,11 @@ void Master::itemSelected(int id,
     }
     else if(type == 1)
     {
-        Storage *storage = new Storage(this, mainStackedWidget, storageItems[id]);
+        Storage *storage = new Storage(this,
+                                       mainStackedWidget,
+                                       storageItems[id],
+                                       client,
+                                       crypto);
         this->mainStackedWidget->addWidget(storage);
 
         startAnimation();
@@ -504,7 +573,11 @@ void Master::itemSelected(int id,
     }
     else
     {
-        Note *note = new Note(this, mainStackedWidget, notesItems[id]);
+        Note *note = new Note(this,
+                              mainStackedWidget,
+                              notesItems[id],
+                              client,
+                              crypto);
         this->mainStackedWidget->addWidget(note);
 
         startAnimation();

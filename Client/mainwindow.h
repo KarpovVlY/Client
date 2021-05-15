@@ -2,10 +2,14 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "signup.h"
+
+
+#include "login.h"
 #include "master.h"
 
 #include "client.h"
+#include "cryptopp.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -14,27 +18,23 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-
-public:
-
 private:
     Ui::MainWindow *ui;
-    SignUp *signUpPage;
+
     Master *masterPage;
-
-    NewNote *newNotePage;
-    NewContact *newContactPage;
-
+    Login *loginPage;
 
     Client *client;
+    cryptopp *crypto;
 
 public:
     MainWindow(QWidget *parent = nullptr);
+
     ~MainWindow();
 
-private:
 
-
+    void changePageToMaster();
+    void changePageToLogin();
 
 
 

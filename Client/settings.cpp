@@ -31,22 +31,6 @@ void Settings::on_cancelButon_clicked()
 }
 
 
-void Settings::on_whiteRadioButton_clicked()
-{
-
-
-
-}
-
-
-void Settings::on_blackRadioButton_clicked()
-{
-
-
-
-}
-
-
 void Settings::startAnimation()
 {
     fadeEffect = new QGraphicsOpacityEffect(this);
@@ -59,6 +43,7 @@ void Settings::startAnimation()
     animation->setEasingCurve(QEasingCurve::OutBack);
     animation->start(QPropertyAnimation::DeleteWhenStopped);
 }
+
 
 void Settings::endAnimation()
 {
@@ -76,4 +61,10 @@ void Settings::endAnimation()
 Settings::~Settings()
 {
     delete ui;
+}
+
+
+void Settings::on_exitButton_clicked()
+{
+
 }

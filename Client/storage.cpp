@@ -7,7 +7,9 @@ NewStorage *newStoragePage;
 
 Storage::Storage(QWidget *parent,
            QStackedWidget *mainStackedWidget,
-           StorageItem *item) :
+           StorageItem *item,
+           Client *client,
+           cryptopp *crypt) :
            QWidget(parent),
            ui(new Ui::Storage)
 {
@@ -18,6 +20,8 @@ Storage::Storage(QWidget *parent,
 
 
     this->currentItem = item;
+    this->client = client;
+    this->crypt = crypt;
 
 
     ui->nameLineEdit->setText(item->name);
@@ -78,7 +82,31 @@ void Storage::on_deleteButon_clicked()
 {
 
     QSqlQuery query;
+
+
+    QString a[6];
+    query.exec("SELECT name, description, login, password, info, content FROM storages WHERE id = " + QString::number(currentItem->uniqueId));
+    while (query.next())
+    {
+        a[0] = query.value(0).toString(),
+        a[1] = query.value(1).toString(),
+        a[2] = query.value(2).toString();
+        a[3] = query.value(3).toString();
+        a[4] = query.value(4).toString();
+        a[5] = query.value(5).toString();
+    }
+
+    client->sendMesage("MC_DROP_STORAGE:" +
+                       a[0] + ':' +
+                       a[1] + ':' +
+                       a[2] + ':' +
+                       a[3] + ':' +
+                       a[4] + ':' +
+                       a[5]);
+
+
     query.exec("DELETE FROM storages WHERE id = " + QString::number(currentItem->uniqueId));
+
 
 
     startAnimation();
@@ -106,6 +134,15 @@ void Storage::storageChanged(QString name,
 {
     mainStackedWidget->removeWidget(newStoragePage);
 
+    QString previous[6];
+
+    previous[0] = crypt->encrypt(currentItem->name);
+    previous[1] = crypt->encrypt(currentItem->description);
+    previous[2] = crypt->encrypt(currentItem->login);
+    previous[3] = crypt->encrypt(currentItem->password);
+    previous[4] = crypt->encrypt(currentItem->info);
+    previous[5] = crypt->encrypt(currentItem->content);
+
 
     currentItem->name = name;
     currentItem->description = description;
@@ -122,15 +159,39 @@ void Storage::storageChanged(QString name,
     ui->contentPlainTextEdit->setPlainText(content);
 
 
+    QString crypted[6];
+
+    crypted[0] = crypt->encrypt(name);
+    crypted[1] = crypt->encrypt(description);
+    crypted[2] = crypt->encrypt(login);
+    crypted[3] = crypt->encrypt(password);
+    crypted[4] = crypt->encrypt(info);
+    crypted[5] = crypt->encrypt(content);
+
+
     QSqlQuery query;
-    query.exec("UPDATE storages SET name = '" + name +
-               "', description = '" + description +
-               "', login = '" + login +
-               "', password = '" + password +
-               "', info = '" + info +
-               "', content = '" + content +
+    query.exec("UPDATE storages SET name = '" + crypted[0] +
+               "', description = '" + crypted[1] +
+               "', login = '" + crypted[2] +
+               "', password = '" + crypted[3] +
+               "', info = '" + crypted[4] +
+               "', content = '" + crypted[5] +
                "' WHERE id = " + QString::number(currentItem->uniqueId));
 
+
+    client->sendMesage("MC_EDIT_STORAGE:" +
+                       previous[0] + ':' +
+                       previous[1] + ':' +
+                       previous[2] + ':' +
+                       previous[3] + ':' +
+                       previous[4] + ':' +
+                       previous[5] + ':' +
+                       crypted[0] + ':' +
+                       crypted[1] + ':' +
+                       crypted[2] + ':' +
+                       crypted[3] + ':' +
+                       crypted[4] + ':' +
+                       crypted[5]);
 
 
     Master *master = qobject_cast<Master *>(masterWidget);

@@ -5,7 +5,9 @@
 
 Contact::Contact(QWidget *parent,
                  QStackedWidget *mainStackedWidget,
-                 ContactItem *item) :
+                 ContactItem *item,
+                 Client *client,
+                 cryptopp *crypt) :
                  QWidget(parent),
                  ui(new Ui::Contact)
 {
@@ -16,6 +18,8 @@ Contact::Contact(QWidget *parent,
 
 
     this->currentItem = item;
+    this->client = client;
+    this->crypt = crypt;
 
 
     ui->nameLineEdit->setText(item->name);
@@ -73,6 +77,26 @@ void Contact::on_editButton_clicked()
 void Contact::on_deleteButon_clicked()
 {
     QSqlQuery query;
+
+    QString a[5];
+    query.exec("SELECT name, description, phone, email, content FROM contacts WHERE id = " + QString::number(currentItem->uniqueId));
+    while (query.next())
+    {
+        a[0] = query.value(0).toString(),
+        a[1] = query.value(1).toString(),
+        a[2] = query.value(2).toString();
+        a[3] = query.value(3).toString();
+        a[4] = query.value(4).toString();
+    }
+
+    client->sendMesage("MC_DROP_CONTACT:" +
+                       a[0] + ':' +
+                       a[1] + ':' +
+                       a[2] + ':' +
+                       a[3] + ':' +
+                       a[4]);
+
+
     query.exec("DELETE FROM contacts WHERE id = " + QString::number(currentItem->uniqueId));
 
 
@@ -98,6 +122,14 @@ void Contact::contactChanged(QString name,
                              QString email,
                              QString content)
 {
+    QString previous[5];
+
+    previous[0] = crypt->encrypt(currentItem->name);
+    previous[1] = crypt->encrypt(currentItem->description);
+    previous[2] = crypt->encrypt(currentItem->phone);
+    previous[3] = crypt->encrypt(currentItem->email);
+    previous[4] = crypt->encrypt(currentItem->content);
+
 
     currentItem->name = name;
     currentItem->description = description;
@@ -105,20 +137,43 @@ void Contact::contactChanged(QString name,
     currentItem->email = email;
     currentItem->content = content;
 
+
     ui->nameLineEdit->setText(name);
     ui->companyLineEdit->setText(description);
     ui->phoneLineEdit->setText(phone);
     ui->emailLineEdit->setText(email);
     ui->contentPlainTextEdit->setPlainText(content);
 
+
+    QString crypted[5];
+
+    crypted[0] = crypt->encrypt(name);
+    crypted[1] = crypt->encrypt(description);
+    crypted[2] = crypt->encrypt(phone);
+    crypted[3] = crypt->encrypt(email);
+    crypted[4] = crypt->encrypt(content);
+
+
     QSqlQuery query;
-    query.exec("UPDATE contacts SET name = '" + name +
-               "', description = '" + description +
-               "', phone = '" + phone +
-               "', email = '" + email +
-               "', content = '" + content +
+    query.exec("UPDATE contacts SET name = '" + crypted[0] +
+               "', description = '" + crypted[1] +
+               "', phone = '" + crypted[2] +
+               "', email = '" + crypted[3] +
+               "', content = '" + crypted[4] +
                "' WHERE id = " + QString::number(currentItem->uniqueId));
 
+
+    client->sendMesage("MC_EDIT_CONTACT:" +
+                       previous[0] + ':' +
+                       previous[1] + ':' +
+                       previous[2] + ':' +
+                       previous[3] + ':' +
+                       previous[4] + ':' +
+                       crypted[0] + ':' +
+                       crypted[1] + ':' +
+                       crypted[2] + ':' +
+                       crypted[3] + ':' +
+                       crypted[4]);
 
 
     Master *master = qobject_cast<Master *>(masterWidget);
