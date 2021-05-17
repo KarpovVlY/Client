@@ -1,3 +1,17 @@
-# Client
+# Краткий пример работы
 
-![alt text](https://github.com/KarpovVlY/Client/tree/main/p/1.png)
+![](p/1.png)
+![](p/2.png)
+![](p/3.png)
+![](p/4.png)
+![](p/5.png)
+### На примере заметок
+![](p/6.png)
+![](p/7.png)
+![](p/8.png)
+
+### БД сервера
+![](p/111.png)
+### БД клиента
+![](p/222.png)
+![](p/2222.png)
